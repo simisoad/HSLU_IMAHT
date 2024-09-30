@@ -1,0 +1,427 @@
+[gd_scene load_steps=8 format=3 uid="uid://cvrhtrw2hyi7o"]
+
+[ext_resource type="Script" path="res://sw_01.gd" id="1_bxeep"]
+[ext_resource type="Script" path="res://func_calc.gd" id="2_k108o"]
+[ext_resource type="Script" path="res://node_2d.gd" id="2_kvap6"]
+[ext_resource type="Script" path="res://xy_axis.gd" id="3_jlla3"]
+[ext_resource type="Texture2D" uid="uid://06wol6sd35lm" path="res://Sprites/Point.png" id="3_wmt5y"]
+[ext_resource type="Script" path="res://camera_2d.gd" id="4_moodi"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_hbtwv"]
+font_size = 12
+
+[node name="SW01" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_bxeep")
+min_x = -3.01
+max_x = 3.98
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="CanvasLayer"]
+anchors_preset = -1
+anchor_top = 0.938
+anchor_bottom = 0.938
+offset_top = -47.824
+offset_right = 228.0
+offset_bottom = -7.82404
+grow_vertical = 0
+
+[node name="Button_scale" type="Button" parent="CanvasLayer/HBoxContainer3"]
+z_index = 500
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+text = "scale x/y"
+
+[node name="scale_x_user" type="LineEdit" parent="CanvasLayer/HBoxContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "1.0"
+placeholder_text = "1.0"
+
+[node name="scale_y_user" type="LineEdit" parent="CanvasLayer/HBoxContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "1.0"
+placeholder_text = "1.0"
+
+[node name="Button_arg_min" type="Button" parent="CanvasLayer/HBoxContainer3"]
+z_index = 500
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+text = "min_max_x:"
+
+[node name="min_x_user" type="LineEdit" parent="CanvasLayer/HBoxContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "-1.0"
+placeholder_text = "-1.0"
+
+[node name="max_x_user" type="LineEdit" parent="CanvasLayer/HBoxContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "1.0"
+placeholder_text = "1.0"
+
+[node name="set_function_user" type="LineEdit" parent="CanvasLayer/HBoxContainer3"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(480, 0)
+layout_mode = 2
+text = "1.0"
+placeholder_text = "1.0"
+
+[node name="Button" type="Button" parent="CanvasLayer/HBoxContainer3"]
+layout_mode = 2
+text = "set func"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+
+[node name="Button_minimizer" type="Button" parent="CanvasLayer/HBoxContainer"]
+z_index = 500
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+text = "minimizer"
+
+[node name="start_x_user" type="LineEdit" parent="CanvasLayer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "start_x"
+
+[node name="runden_user" type="LineEdit" parent="CanvasLayer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "runden"
+
+[node name="Button_minimizer_reset" type="Button" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+text = "reset
+"
+
+[node name="func_f" type="HBoxContainer" parent="CanvasLayer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+script = ExtResource("2_k108o")
+
+[node name="Panel_f" type="Panel" parent="CanvasLayer/HBoxContainer/func_f"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+
+[node name="Label_f" type="Label" parent="CanvasLayer/HBoxContainer/func_f/Panel_f"]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 40.0
+text = "f:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control" type="Control" parent="CanvasLayer/HBoxContainer/func_f/Panel_f"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CenterContainer_a" type="CenterContainer" parent="CanvasLayer/HBoxContainer/func_f"]
+layout_mode = 2
+
+[node name="LineEdit_a" type="LineEdit" parent="CanvasLayer/HBoxContainer/func_f/CenterContainer_a"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_constants/minimum_character_width = 2
+text = "0.0"
+placeholder_text = "0.0"
+expand_to_text_length = true
+
+[node name="Panel_x^8" type="Panel" parent="CanvasLayer/HBoxContainer/func_f"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+
+[node name="Label_x^8" type="Label" parent="CanvasLayer/HBoxContainer/func_f/Panel_x^8"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 40.0
+text = "x^8+
+"
+label_settings = SubResource("LabelSettings_hbtwv")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CenterContainer_b" type="CenterContainer" parent="CanvasLayer/HBoxContainer/func_f"]
+layout_mode = 2
+
+[node name="LineEdit_b" type="LineEdit" parent="CanvasLayer/HBoxContainer/func_f/CenterContainer_b"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_constants/minimum_character_width = 2
+text = "0.0"
+placeholder_text = "0.0"
+expand_to_text_length = true
+
+[node name="Panel_x^7" type="Panel" parent="CanvasLayer/HBoxContainer/func_f"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+
+[node name="Label_x^7" type="Label" parent="CanvasLayer/HBoxContainer/func_f/Panel_x^7"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 40.0
+text = "x^7+
+"
+label_settings = SubResource("LabelSettings_hbtwv")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CenterContainer_c" type="CenterContainer" parent="CanvasLayer/HBoxContainer/func_f"]
+layout_mode = 2
+
+[node name="LineEdit_c" type="LineEdit" parent="CanvasLayer/HBoxContainer/func_f/CenterContainer_c"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_constants/minimum_character_width = 2
+text = "0.0"
+placeholder_text = "0.0"
+expand_to_text_length = true
+
+[node name="Panel_x^6" type="Panel" parent="CanvasLayer/HBoxContainer/func_f"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+
+[node name="Label_x^6" type="Label" parent="CanvasLayer/HBoxContainer/func_f/Panel_x^6"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 40.0
+text = "x^6+
+"
+label_settings = SubResource("LabelSettings_hbtwv")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CenterContainer_d" type="CenterContainer" parent="CanvasLayer/HBoxContainer/func_f"]
+layout_mode = 2
+
+[node name="LineEdit_d" type="LineEdit" parent="CanvasLayer/HBoxContainer/func_f/CenterContainer_d"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_constants/minimum_character_width = 2
+text = "0.0"
+placeholder_text = "0.0"
+expand_to_text_length = true
+
+[node name="Panel_x^5" type="Panel" parent="CanvasLayer/HBoxContainer/func_f"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+
+[node name="Label_x^5" type="Label" parent="CanvasLayer/HBoxContainer/func_f/Panel_x^5"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 40.0
+text = "x^5+
+"
+label_settings = SubResource("LabelSettings_hbtwv")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CenterContainer_e" type="CenterContainer" parent="CanvasLayer/HBoxContainer/func_f"]
+layout_mode = 2
+
+[node name="LineEdit_e" type="LineEdit" parent="CanvasLayer/HBoxContainer/func_f/CenterContainer_e"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_constants/minimum_character_width = 2
+text = "0.0"
+placeholder_text = "0.0"
+expand_to_text_length = true
+
+[node name="Panel_x^4" type="Panel" parent="CanvasLayer/HBoxContainer/func_f"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+
+[node name="Label_x^4" type="Label" parent="CanvasLayer/HBoxContainer/func_f/Panel_x^4"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 40.0
+text = "x^4+
+"
+label_settings = SubResource("LabelSettings_hbtwv")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CenterContainer_f" type="CenterContainer" parent="CanvasLayer/HBoxContainer/func_f"]
+layout_mode = 2
+
+[node name="LineEdit_f" type="LineEdit" parent="CanvasLayer/HBoxContainer/func_f/CenterContainer_f"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_constants/minimum_character_width = 2
+text = "0.0"
+placeholder_text = "0.0"
+expand_to_text_length = true
+
+[node name="Panel_x^3" type="Panel" parent="CanvasLayer/HBoxContainer/func_f"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+
+[node name="Label_x^3" type="Label" parent="CanvasLayer/HBoxContainer/func_f/Panel_x^3"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 40.0
+text = "x^3+
+"
+label_settings = SubResource("LabelSettings_hbtwv")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CenterContainer_g" type="CenterContainer" parent="CanvasLayer/HBoxContainer/func_f"]
+layout_mode = 2
+
+[node name="LineEdit_g" type="LineEdit" parent="CanvasLayer/HBoxContainer/func_f/CenterContainer_g"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_constants/minimum_character_width = 2
+text = "0.0"
+placeholder_text = "0.0"
+expand_to_text_length = true
+
+[node name="Panel_x^2" type="Panel" parent="CanvasLayer/HBoxContainer/func_f"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+
+[node name="Label_x^2" type="Label" parent="CanvasLayer/HBoxContainer/func_f/Panel_x^2"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 40.0
+text = "x^2+
+"
+label_settings = SubResource("LabelSettings_hbtwv")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CenterContainer_h" type="CenterContainer" parent="CanvasLayer/HBoxContainer/func_f"]
+layout_mode = 2
+
+[node name="LineEdit_h" type="LineEdit" parent="CanvasLayer/HBoxContainer/func_f/CenterContainer_h"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_constants/minimum_character_width = 2
+text = "0.0"
+placeholder_text = "0.0"
+expand_to_text_length = true
+
+[node name="Panel_x" type="Panel" parent="CanvasLayer/HBoxContainer/func_f"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+
+[node name="Label_x" type="Label" parent="CanvasLayer/HBoxContainer/func_f/Panel_x"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 40.0
+text = "x+
+"
+label_settings = SubResource("LabelSettings_hbtwv")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CenterContainer_i" type="CenterContainer" parent="CanvasLayer/HBoxContainer/func_f"]
+layout_mode = 2
+
+[node name="LineEdit_i" type="LineEdit" parent="CanvasLayer/HBoxContainer/func_f/CenterContainer_i"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_constants/minimum_character_width = 2
+text = "0.0"
+placeholder_text = "0.0"
+expand_to_text_length = true
+
+[node name="Button" type="Button" parent="CanvasLayer/HBoxContainer/func_f"]
+layout_mode = 2
+text = "set f/fd"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ShowFuncF" type="Button" parent="CanvasLayer/HBoxContainer2"]
+modulate = Color(0.258824, 0.407843, 0.101961, 1)
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+text = "F"
+
+[node name="ShowFuncDF" type="Button" parent="CanvasLayer/HBoxContainer2"]
+modulate = Color(0.403922, 0.117647, 0.0980392, 1)
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+text = "DF"
+
+[node name="zoomlevel" type="Label" parent="CanvasLayer/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Coords" type="Label" parent="CanvasLayer/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "coords"
+
+[node name="Canvas" type="Node2D" parent="."]
+
+[node name="grid" type="Node2D" parent="Canvas"]
+z_index = 500
+script = ExtResource("2_kvap6")
+
+[node name="graph_f" type="Line2D" parent="Canvas"]
+unique_name_in_owner = true
+modulate = Color(0.258824, 1, 0.101961, 1)
+z_index = 50
+points = PackedVector2Array(-301, 375.48, -300, 375, -299, 374.48, -298, 373.921, -297, 373.322, -296, 372.685, -295, 372.01, -294, 371.298, -293, 370.548, -292, 369.762, -291, 368.94, -290, 368.082, -289, 367.19, -288, 366.262, -287, 365.301, -286, 364.305, -285, 363.277, -284, 362.216, -283, 361.122, -282, 359.997, -281, 358.841, -280, 357.653, -279, 356.436, -278, 355.188, -277, 353.911, -276, 352.604, -275, 351.27, -274, 349.907, -273, 348.516, -272, 347.098, -271, 345.653, -270, 344.182, -269, 342.686, -268, 341.163, -267, 339.616, -266, 338.044, -265, 336.448, -264, 334.828, -263, 333.185, -262, 331.519, -261, 329.83, -260, 328.12, -259, 326.388, -258, 324.635, -257, 322.861, -256, 321.066, -255, 319.252, -254, 317.418, -253, 315.565, -252, 313.694, -251, 311.804, -250, 309.896, -249, 307.97, -248, 306.028, -247, 304.069, -246, 302.093, -245, 300.102, -244, 298.095, -243, 296.073, -242, 294.036, -241, 291.985, -240, 289.92, -239, 287.841, -238, 285.749, -237, 283.645, -236, 281.527, -235, 279.398, -234, 277.257, -233, 275.104, -232, 272.941, -231, 270.767, -230, 268.583, -229, 266.388, -228, 264.185, -227, 261.972, -226, 259.75, -225, 257.52, -224, 255.281, -223, 253.035, -222, 250.781, -221, 248.521, -220, 246.253, -219, 243.98, -218, 241.7, -217, 239.414, -216, 237.123, -215, 234.827, -214, 232.526, -213, 230.221, -212, 227.912, -211, 225.599, -210, 223.283, -209, 220.963, -208, 218.641, -207, 216.316, -206, 213.989, -205, 211.66, -204, 209.33, -203, 206.999, -202, 204.666, -201, 202.333, -200, 200, -199, 197.667, -198, 195.334, -197, 193.001, -196, 190.67, -195, 188.34, -194, 186.011, -193, 183.684, -192, 181.359, -191, 179.036, -190, 176.716, -189, 174.399, -188, 172.085, -187, 169.774, -186, 167.467, -185, 165.165, -184, 162.866, -183, 160.572, -182, 158.283, -181, 155.999, -180, 153.72, -179, 151.447, -178, 149.18, -177, 146.918, -176, 144.664, -175, 142.415, -174, 140.174, -173, 137.94, -172, 135.713, -171, 133.494, -170, 131.283, -169, 129.079, -168, 126.884, -167, 124.698, -166, 122.521, -165, 120.352, -164, 118.193, -163, 116.043, -162, 113.903, -161, 111.773, -160, 109.653, -159, 107.544, -158, 105.445, -157, 103.357, -156, 101.28, -155, 99.2145, -154, 97.1603, -153, 95.1178, -152, 93.0872, -151, 91.0687, -150, 89.0625, -149, 87.0688, -148, 85.0878, -147, 83.1196, -146, 81.1646, -145, 79.2229, -144, 77.2946, -143, 75.38, -142, 73.4792, -141, 71.5925, -140, 69.72, -139, 67.8619, -138, 66.0184, -137, 64.1896, -136, 62.3758, -135, 60.577, -134, 58.7936, -133, 57.0256, -132, 55.2732, -131, 53.5365, -130, 51.8158, -129, 50.1112, -128, 48.4229, -127, 46.751, -126, 45.0957, -125, 43.457, -124, 41.8353, -123, 40.2306, -122, 38.643, -121, 37.0728, -120, 35.52, -119, 33.9848, -118, 32.4674, -117, 30.9678, -116, 29.4863, -115, 28.0229, -114, 26.5777, -113, 25.151, -112, 23.7428, -111, 22.3533, -110, 20.9825, -109, 19.6306, -108, 18.2978, -107, 16.9841, -106, 15.6896, -105, 14.4145, -104, 13.1589, -103, 11.9229, -102, 10.7065, -101, 9.50998, -100, 8.33333, -99, 7.17668, -98, 6.04013, -97, 4.92378, -96, 3.82771, -95, 2.75203, -94, 1.69683, -93, 0.662183, -92, -0.351808, -91, -1.34506, -90, -2.3175, -89, -3.26904, -88, -4.19959, -87, -5.1091, -86, -5.99747, -85, -6.86464, -84, -7.71053, -83, -8.53508, -82, -9.33821, -81, -10.1199, -80, -10.88, -79, -11.6185, -78, -12.3354, -77, -13.0305, -76, -13.7039, -75, -14.3555, -74, -14.9851, -73, -15.5929, -72, -16.1787, -71, -16.7425, -70, -17.2842, -69, -17.8038, -68, -18.3012, -67, -18.7765, -66, -19.2296, -65, -19.6605, -64, -20.069, -63, -20.4553, -62, -20.8192, -61, -21.1608, -60, -21.48, -59, -21.7768, -58, -22.0512, -57, -22.3031, -56, -22.5326, -55, -22.7396, -54, -22.9242, -53, -23.0863, -52, -23.2258, -51, -23.3429, -50, -23.4375, -49, -23.5096, -48, -23.5592, -47, -23.5863, -46, -23.5909, -45, -23.573, -44, -23.5326, -43, -23.4698, -42, -23.3845, -41, -23.2768, -40, -23.1467, -39, -22.9941, -38, -22.8192, -37, -22.622, -36, -22.4024, -35, -22.1605, -34, -21.8963, -33, -21.6099, -32, -21.3012, -31, -20.9704, -30, -20.6175, -29, -20.2425, -28, -19.8454, -27, -19.4262, -26, -18.9851, -25, -18.5221, -24, -18.0372, -23, -17.5305, -22, -17.0021, -21, -16.4519, -20, -15.88, -19, -15.2865, -18, -14.6715, -17, -14.0351, -16, -13.3772, -15, -12.698, -14, -11.9975, -13, -11.2758, -12, -10.5329, -11, -9.76904, -10, -8.98417, -9, -8.1784, -8, -7.35181, -7, -6.50448, -6, -5.63651, -5, -4.74797, -4, -3.83895, -3, -2.90956, -2, -1.95987, -1, -0.989983, 0, 0, 1, 1.00998, 2, 2.03987, 3, 3.08954, 4, 4.15891, 5, 5.24786, 6, 6.35629, 7, 7.48408, 8, 8.63113, 9, 9.7973, 10, 10.9825, 11, 12.1866, 12, 13.4095, 13, 14.651, 14, 15.9111, 15, 17.1895, 16, 18.4863, 17, 19.8012, 18, 21.1341, 19, 22.4848, 20, 23.8533, 21, 25.2394, 22, 26.643, 23, 28.0639, 24, 29.502, 25, 30.957, 26, 32.429, 27, 33.9177, 28, 35.4229, 29, 36.9446, 30, 38.4825, 31, 40.0365, 32, 41.6065, 33, 43.1922, 34, 44.7936, 35, 46.4104, 36, 48.0424, 37, 49.6896, 38, 51.3517, 39, 53.0286, 40, 54.72, 41, 56.4258, 42, 58.1459, 43, 59.88, 44, 61.6279, 45, 63.3895, 46, 65.1646, 47, 66.953, 48, 68.7544, 49, 70.5688, 50, 72.3958, 51, 74.2354, 52, 76.0872, 53, 77.9512, 54, 79.827, 55, 81.7145, 56, 83.6135, 57, 85.5238, 58, 87.4451, 59, 89.3772, 60, 91.32, 61, 93.2732, 62, 95.2365, 63, 97.2098, 64, 99.1928, 65, 101.185, 66, 103.187, 67, 105.198, 68, 107.218, 69, 109.246, 70, 111.283, 71, 113.327, 72, 115.38, 73, 117.44, 74, 119.507, 75, 121.582, 76, 123.664, 77, 125.752, 78, 127.846, 79, 129.947, 80, 132.053, 81, 134.165, 82, 136.283, 83, 138.405, 84, 140.533, 85, 142.665, 86, 144.801, 87, 146.941, 88, 149.085, 89, 151.232, 90, 153.383, 91, 155.536, 92, 157.692, 93, 159.85, 94, 162.011, 95, 164.173, 96, 166.337, 97, 168.501, 98, 170.667, 99, 172.833, 100, 175, 101, 177.167, 102, 179.333, 103, 181.499, 104, 183.663, 105, 185.827, 106, 187.989, 107, 190.149, 108, 192.307, 109, 194.463, 110, 196.616, 111, 198.766, 112, 200.912, 113, 203.054, 114, 205.193, 115, 207.327, 116, 209.456, 117, 211.581, 118, 213.7, 119, 215.813, 120, 217.92, 121, 220.021, 122, 222.115, 123, 224.202, 124, 226.281, 125, 228.353, 126, 230.416, 127, 232.472, 128, 234.518, 129, 236.555, 130, 238.582, 131, 240.6, 132, 242.608, 133, 244.604, 134, 246.59, 135, 248.565, 136, 250.527, 137, 252.478, 138, 254.416, 139, 256.341, 140, 258.253, 141, 260.152, 142, 262.036, 143, 263.906, 144, 265.762, 145, 267.602, 146, 269.427, 147, 271.236, 148, 273.028, 149, 274.804, 150, 276.563, 151, 278.304, 152, 280.027, 153, 281.732, 154, 283.418, 155, 285.085, 156, 286.733, 157, 288.361, 158, 289.968, 159, 291.555, 160, 293.12, 161, 294.664, 162, 296.186, 163, 297.685, 164, 299.161, 165, 300.615, 166, 302.044, 167, 303.449, 168, 304.83, 169, 306.186, 170, 307.516, 171, 308.82, 172, 310.098, 173, 311.349, 174, 312.573, 175, 313.77, 176, 314.938, 177, 316.077, 178, 317.188, 179, 318.269, 180, 319.32, 181, 320.341, 182, 321.331, 183, 322.289, 184, 323.216, 185, 324.11, 186, 324.972, 187, 325.801, 188, 326.596, 189, 327.356, 190, 328.082, 191, 328.774, 192, 329.429, 193, 330.048, 194, 330.631, 195, 331.177, 196, 331.685, 197, 332.156, 198, 332.587, 199, 332.98, 200, 333.333, 201, 333.647, 202, 333.919, 203, 334.151, 204, 334.341, 205, 334.49, 206, 334.595, 207, 334.658, 208, 334.677, 209, 334.652, 210, 334.582, 211, 334.468, 212, 334.308, 213, 334.101, 214, 333.848, 215, 333.548, 216, 333.2, 217, 332.804, 218, 332.359, 219, 331.864, 220, 331.32, 221, 330.725, 222, 330.08, 223, 329.383, 224, 328.634, 225, 327.832, 226, 326.977, 227, 326.069, 228, 325.106, 229, 324.089, 230, 323.016, 231, 321.887, 232, 320.702, 233, 319.46, 234, 318.16, 235, 316.802, 236, 315.385, 237, 313.909, 238, 312.374, 239, 310.777, 240, 309.12, 241, 307.401, 242, 305.62, 243, 303.776, 244, 301.869, 245, 299.898, 246, 297.862, 247, 295.761, 248, 293.595, 249, 291.362, 250, 289.063, 251, 286.695, 252, 284.26, 253, 281.756, 254, 279.183, 255, 276.54, 256, 273.826, 257, 271.041, 258, 268.184, 259, 265.255, 260, 262.253, 261, 259.178, 262, 256.028, 263, 252.803, 264, 249.503, 265, 246.127, 266, 242.674, 267, 239.144, 268, 235.536, 269, 231.849, 270, 228.082, 271, 224.236, 272, 220.31, 273, 216.302, 274, 212.212, 275, 208.04, 276, 203.785, 277, 199.446, 278, 195.023, 279, 190.514, 280, 185.92, 281, 181.239, 282, 176.472, 283, 171.616, 284, 166.672, 285, 161.64, 286, 156.517, 287, 151.304, 288, 146, 289, 140.604, 290, 135.116, 291, 129.535, 292, 123.859, 293, 118.09, 294, 112.225, 295, 106.265, 296, 100.207, 297, 94.0531, 298, 87.8009, 299, 81.4501, 300, 75, 301, 68.4499, 302, 61.7991, 303, 55.0468, 304, 48.1925, 305, 41.2354, 306, 34.1747, 307, 27.0098, 308, 19.7399, 309, 12.3644, 310, 4.8825, 311, -2.7065, 312, -10.4033, 313, -18.2087, 314, -26.1233, 315, -34.148, 316, -42.2833, 317, -50.5301, 318, -58.8892, 319, -67.3611, 320, -75.9467, 321, -84.6467, 322, -93.4618, 323, -102.393, 324, -111.44, 325, -120.605, 326, -129.889, 327, -139.291, 328, -148.812, 329, -158.454, 330, -168.217, 331, -178.103, 332, -188.11, 333, -198.241, 334, -208.497, 335, -218.877, 336, -229.383, 337, -240.016, 338, -250.775, 339, -261.663, 340, -272.68, 341, -283.826, 342, -295.103, 343, -306.511, 344, -318.05, 345, -329.723, 346, -341.529, 347, -353.469, 348, -365.545, 349, -377.756, 350, -390.104, 351, -402.59, 352, -415.214, 353, -427.977, 354, -440.879, 355, -453.923, 356, -467.108, 357, -480.436, 358, -493.906, 359, -507.521, 360, -521.28, 361, -535.185, 362, -549.236, 363, -563.435, 364, -577.782, 365, -592.277, 366, -606.922, 367, -621.718, 368, -636.666, 369, -651.765, 370, -667.018, 371, -682.424, 372, -697.985, 373, -713.702, 374, -729.575, 375, -745.605, 376, -761.794, 377, -778.142, 378, -794.649, 379, -811.317, 380, -828.147, 381, -845.139, 382, -862.294, 383, -879.613, 384, -897.098, 385, -914.748, 386, -932.565, 387, -950.549, 388, -968.703, 389, -987.025, 390, -1005.52, 391, -1024.18, 392, -1043.02, 393, -1062.03, 394, -1081.21, 395, -1100.56, 396, -1120.1, 397, -1139.81)
+width = 2.0
+
+[node name="graph_df" type="Line2D" parent="Canvas"]
+unique_name_in_owner = true
+modulate = Color(1, 0.117647, 0.0980392, 1)
+z_index = 50
+points = PackedVector2Array(-301, -45.975, -300, -50, -299, -53.975, -298, -57.9003, -297, -61.7759, -296, -65.6021, -295, -69.3792, -294, -73.1072, -293, -76.7864, -292, -80.4171, -291, -83.9993, -290, -87.5333, -289, -91.0194, -288, -94.4576, -287, -97.8482, -286, -101.191, -285, -104.488, -284, -107.737, -283, -110.939, -282, -114.094, -281, -117.204, -280, -120.267, -279, -123.284, -278, -126.255, -277, -129.181, -276, -132.061, -275, -134.896, -274, -137.686, -273, -140.431, -272, -143.132, -271, -145.788, -270, -148.4, -269, -150.968, -268, -153.492, -267, -155.973, -266, -158.41, -265, -160.804, -264, -163.155, -263, -165.463, -262, -167.729, -261, -169.952, -260, -172.133, -259, -174.272, -258, -176.37, -257, -178.425, -256, -180.439, -255, -182.413, -254, -184.345, -253, -186.236, -252, -188.086, -251, -189.897, -250, -191.667, -249, -193.397, -248, -195.087, -247, -196.738, -246, -198.349, -245, -199.921, -244, -201.454, -243, -202.948, -242, -204.404, -241, -205.821, -240, -207.2, -239, -208.541, -238, -209.844, -237, -211.11, -236, -212.338, -235, -213.529, -234, -214.683, -233, -215.8, -232, -216.881, -231, -217.925, -230, -218.933, -229, -219.905, -228, -220.842, -227, -221.742, -226, -222.607, -225, -223.438, -224, -224.233, -223, -224.993, -222, -225.718, -221, -226.41, -220, -227.067, -219, -227.69, -218, -228.279, -217, -228.835, -216, -229.357, -215, -229.846, -214, -230.302, -213, -230.725, -212, -231.116, -211, -231.474, -210, -231.8, -209, -232.094, -208, -232.356, -207, -232.587, -206, -232.786, -205, -232.954, -204, -233.091, -203, -233.197, -202, -233.273, -201, -233.318, -200, -233.333, -199, -233.318, -198, -233.274, -197, -233.199, -196, -233.095, -195, -232.962, -194, -232.801, -193, -232.61, -192, -232.39, -191, -232.143, -190, -231.867, -189, -231.563, -188, -231.231, -187, -230.872, -186, -230.485, -185, -230.071, -184, -229.63, -183, -229.162, -182, -228.668, -181, -228.147, -180, -227.6, -179, -227.027, -178, -226.428, -177, -225.804, -176, -225.154, -175, -224.479, -174, -223.779, -173, -223.054, -172, -222.305, -171, -221.531, -170, -220.733, -169, -219.911, -168, -219.066, -167, -218.196, -166, -217.303, -165, -216.388, -164, -215.449, -163, -214.487, -162, -213.502, -161, -212.496, -160, -211.467, -159, -210.416, -158, -209.343, -157, -208.249, -156, -207.133, -155, -205.996, -154, -204.838, -153, -203.659, -152, -202.46, -151, -201.24, -150, -200, -149, -198.74, -148, -197.46, -147, -196.161, -146, -194.842, -145, -193.504, -144, -192.147, -143, -190.771, -142, -189.377, -141, -187.964, -140, -186.533, -139, -185.084, -138, -183.618, -137, -182.133, -136, -180.631, -135, -179.113, -134, -177.577, -133, -176.024, -132, -174.454, -131, -172.869, -130, -171.267, -129, -169.649, -128, -168.015, -127, -166.366, -126, -164.701, -125, -163.021, -124, -161.326, -123, -159.616, -122, -157.892, -121, -156.153, -120, -154.4, -119, -152.633, -118, -150.852, -117, -149.058, -116, -147.25, -115, -145.429, -114, -143.595, -113, -141.748, -112, -139.889, -111, -138.017, -110, -136.133, -109, -134.237, -108, -132.33, -107, -130.41, -106, -128.479, -105, -126.537, -104, -124.585, -103, -122.621, -102, -120.646, -101, -118.662, -100, -116.667, -99, -114.662, -98, -112.647, -97, -110.623, -96, -108.589, -95, -106.546, -94, -104.494, -93, -102.433, -92, -100.364, -91, -98.286, -90, -96.2, -89, -94.106, -88, -92.0043, -87, -89.8949, -86, -87.7781, -85, -85.6542, -84, -83.5232, -83, -81.3854, -82, -79.2411, -81, -77.0903, -80, -74.9333, -79, -72.7704, -78, -70.6016, -77, -68.4272, -76, -66.2475, -75, -64.0625, -74, -61.8725, -73, -59.6778, -72, -57.4784, -71, -55.2746, -70, -53.0667, -69, -50.8547, -68, -48.6389, -67, -46.4196, -66, -44.1968, -65, -41.9708, -64, -39.7419, -63, -37.5101, -62, -35.2757, -61, -33.039, -60, -30.8, -59, -28.559, -58, -26.3163, -57, -24.0719, -56, -21.8261, -55, -19.5792, -54, -17.3312, -53, -15.0824, -52, -12.8331, -51, -10.5833, -50, -8.33333, -49, -6.08337, -48, -3.8336, -47, -1.58423, -46, 0.664533, -45, 2.9125, -44, 5.15947, -43, 7.40523, -42, 9.6496, -41, 11.8924, -40, 14.1333, -39, 16.3723, -38, 18.6091, -37, 20.8434, -36, 23.0752, -35, 25.3042, -34, 27.5301, -33, 29.7529, -32, 31.9723, -31, 34.188, -30, 36.4, -29, 38.608, -28, 40.8117, -27, 43.0111, -26, 45.2059, -25, 47.3958, -24, 49.5808, -23, 51.7606, -22, 53.9349, -21, 56.1037, -20, 58.2667, -19, 60.4236, -18, 62.5744, -17, 64.7188, -16, 66.8565, -15, 68.9875, -14, 71.1115, -13, 73.2282, -12, 75.3376, -11, 77.4394, -10, 79.5333, -9, 81.6193, -8, 83.6971, -7, 85.7664, -6, 87.8272, -5, 89.8792, -4, 91.9221, -3, 93.9559, -2, 95.9803, -1, 97.995, 0, 100, 1, 101.995, 2, 103.98, 3, 105.954, 4, 107.918, 5, 109.871, 6, 111.813, 7, 113.744, 8, 115.663, 9, 117.571, 10, 119.467, 11, 121.351, 12, 123.222, 13, 125.082, 14, 126.929, 15, 128.762, 16, 130.583, 17, 132.391, 18, 134.186, 19, 135.966, 20, 137.733, 21, 139.486, 22, 141.225, 23, 142.949, 24, 144.659, 25, 146.354, 26, 148.034, 27, 149.699, 28, 151.348, 29, 152.982, 30, 154.6, 31, 156.202, 32, 157.788, 33, 159.357, 34, 160.91, 35, 162.446, 36, 163.965, 37, 165.467, 38, 166.951, 39, 168.418, 40, 169.867, 41, 171.298, 42, 172.71, 43, 174.105, 44, 175.481, 45, 176.838, 46, 178.175, 47, 179.494, 48, 180.794, 49, 182.073, 50, 183.333, 51, 184.573, 52, 185.793, 53, 186.992, 54, 188.171, 55, 189.329, 56, 190.466, 57, 191.582, 58, 192.676, 59, 193.749, 60, 194.8, 61, 195.829, 62, 196.836, 63, 197.82, 64, 198.782, 65, 199.721, 66, 200.637, 67, 201.53, 68, 202.399, 69, 203.245, 70, 204.067, 71, 204.865, 72, 205.638, 73, 206.388, 74, 207.113, 75, 207.813, 76, 208.487, 77, 209.137, 78, 209.762, 79, 210.36, 80, 210.933, 81, 211.48, 82, 212.001, 83, 212.495, 84, 212.963, 85, 213.404, 86, 213.818, 87, 214.205, 88, 214.564, 89, 214.896, 90, 215.2, 91, 215.476, 92, 215.724, 93, 215.943, 94, 216.134, 95, 216.296, 96, 216.429, 97, 216.533, 98, 216.607, 99, 216.652, 100, 216.667, 101, 216.652, 102, 216.606, 103, 216.531, 104, 216.425, 105, 216.287, 106, 216.119, 107, 215.92, 108, 215.69, 109, 215.427, 110, 215.133, 111, 214.807, 112, 214.449, 113, 214.058, 114, 213.635, 115, 213.179, 116, 212.69, 117, 212.168, 118, 211.612, 119, 211.023, 120, 210.4, 121, 209.743, 122, 209.052, 123, 208.326, 124, 207.566, 125, 206.771, 126, 205.941, 127, 205.076, 128, 204.175, 129, 203.239, 130, 202.267, 131, 201.259, 132, 200.214, 133, 199.134, 134, 198.017, 135, 196.862, 136, 195.671, 137, 194.443, 138, 193.178, 139, 191.874, 140, 190.533, 141, 189.154, 142, 187.737, 143, 186.281, 144, 184.787, 145, 183.254, 146, 181.682, 147, 180.071, 148, 178.42, 149, 176.73, 150, 175, 151, 173.23, 152, 171.42, 153, 169.569, 154, 167.678, 155, 165.746, 156, 163.773, 157, 161.759, 158, 159.703, 159, 157.606, 160, 155.467, 161, 153.286, 162, 151.062, 163, 148.797, 164, 146.489, 165, 144.137, 166, 141.743, 167, 139.306, 168, 136.826, 169, 134.301, 170, 131.733, 171, 129.121, 172, 126.465, 173, 123.764, 174, 121.019, 175, 118.229, 176, 115.394, 177, 112.514, 178, 109.588, 179, 106.617, 180, 103.6, 181, 100.537, 182, 97.4277, 183, 94.2721, 184, 91.0699, 185, 87.8208, 186, 84.5248, 187, 81.1816, 188, 77.7909, 189, 74.3527, 190, 70.8667, 191, 67.3326, 192, 63.7504, 193, 60.1198, 194, 56.4405, 195, 52.7125, 196, 48.9355, 197, 45.1092, 198, 41.2336, 199, 37.3084, 200, 33.3333, 201, 29.3083, 202, 25.2331, 203, 21.1074, 204, 16.9312, 205, 12.7042, 206, 8.42613, 207, 4.0969, 208, -0.283733, 209, -4.71597, 210, -9.2, 211, -13.736, 212, -18.3243, 213, -22.9649, 214, -27.6581, 215, -32.4042, 216, -37.2032, 217, -42.0554, 218, -46.9611, 219, -51.9203, 220, -56.9333, 221, -62.0004, 222, -67.1216, 223, -72.2972, 224, -77.5275, 225, -82.8125, 226, -88.1525, 227, -93.5478, 228, -98.9984, 229, -104.505, 230, -110.067, 231, -115.685, 232, -121.359, 233, -127.09, 234, -132.877, 235, -138.721, 236, -144.622, 237, -150.58, 238, -156.596, 239, -162.669, 240, -168.8, 241, -174.989, 242, -181.236, 243, -187.542, 244, -193.906, 245, -200.329, 246, -206.811, 247, -213.352, 248, -219.953, 249, -226.613, 250, -233.333, 251, -240.113, 252, -246.954, 253, -253.854, 254, -260.815, 255, -267.837, 256, -274.921, 257, -282.065, 258, -289.27, 259, -296.538, 260, -303.867, 261, -311.258, 262, -318.711, 263, -326.227, 264, -333.805, 265, -341.446, 266, -349.15, 267, -356.917, 268, -364.748, 269, -372.642, 270, -380.6, 271, -388.622, 272, -396.708, 273, -404.859, 274, -413.074, 275, -421.354, 276, -429.699, 277, -438.109, 278, -446.585, 279, -455.126, 280, -463.733, 281, -472.406, 282, -481.146, 283, -489.951, 284, -498.823, 285, -507.762, 286, -516.769, 287, -525.842, 288, -534.982, 289, -544.191, 290, -553.467, 291, -562.811, 292, -572.223, 293, -581.704, 294, -591.253, 295, -600.871, 296, -610.558, 297, -620.314, 298, -630.14, 299, -640.035, 300, -650, 301, -660.035, 302, -670.14, 303, -680.316, 304, -690.562, 305, -700.879, 306, -711.267, 307, -721.726, 308, -732.257, 309, -742.859, 310, -753.533, 311, -764.279, 312, -775.098, 313, -785.988, 314, -796.951, 315, -807.987, 316, -819.097, 317, -830.279, 318, -841.534, 319, -852.864, 320, -864.267, 321, -875.744, 322, -887.295, 323, -898.921, 324, -910.621, 325, -922.396, 326, -934.246, 327, -946.171, 328, -958.172, 329, -970.248, 330, -982.4, 331, -994.628, 332, -1006.93, 333, -1019.31, 334, -1031.77, 335, -1044.3, 336, -1056.92, 337, -1069.6, 338, -1082.37, 339, -1095.21, 340, -1108.13, 341, -1121.13, 342, -1134.21, 343, -1147.37, 344, -1160.6, 345, -1173.91, 346, -1187.3, 347, -1200.78, 348, -1214.33, 349, -1227.96, 350, -1241.67, 351, -1255.46, 352, -1269.33, 353, -1283.28, 354, -1297.31, 355, -1311.42, 356, -1325.61, 357, -1339.89, 358, -1354.24, 359, -1368.68, 360, -1383.2, 361, -1397.8, 362, -1412.48, 363, -1427.25, 364, -1442.1, 365, -1457.03, 366, -1472.04, 367, -1487.14, 368, -1502.32, 369, -1517.59, 370, -1532.93, 371, -1548.37, 372, -1563.88, 373, -1579.48, 374, -1595.17, 375, -1610.94, 376, -1626.79, 377, -1642.73, 378, -1658.76, 379, -1674.87, 380, -1691.07, 381, -1707.35, 382, -1723.72, 383, -1740.17, 384, -1756.72, 385, -1773.35, 386, -1790.06, 387, -1806.87, 388, -1823.76, 389, -1840.73, 390, -1857.8, 391, -1874.95, 392, -1892.2, 393, -1909.53, 394, -1926.95, 395, -1944.45, 396, -1962.05, 397, -1979.74)
+width = 2.0
+
+[node name="xy-axis" type="Node2D" parent="Canvas"]
+script = ExtResource("3_jlla3")
+
+[node name="point_f" type="Sprite2D" parent="."]
+self_modulate = Color(1, 0, 0, 1)
+z_index = 100
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("3_wmt5y")
+
+[node name="point_df" type="Sprite2D" parent="."]
+self_modulate = Color(0, 1, 0, 1)
+z_index = 100
+position = Vector2(100, 0)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("3_wmt5y")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+unique_name_in_owner = true
+ignore_rotation = false
+script = ExtResource("4_moodi")
+zoom_max = Vector2(3, 3)
+
+[connection signal="pressed" from="CanvasLayer/HBoxContainer3/Button_scale" to="." method="_on_button_scale_pressed"]
+[connection signal="pressed" from="CanvasLayer/HBoxContainer3/Button_arg_min" to="." method="_on_button_arg_min_pressed"]
+[connection signal="pressed" from="CanvasLayer/HBoxContainer3/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/HBoxContainer/Button_minimizer" to="." method="_on_button_minimizer_pressed"]
+[connection signal="text_submitted" from="CanvasLayer/HBoxContainer/start_x_user" to="." method="_on_start_x_user_text_submitted"]
+[connection signal="pressed" from="CanvasLayer/HBoxContainer/Button_minimizer_reset" to="." method="_on_button_minimizer_reset_pressed"]
+[connection signal="pressed" from="CanvasLayer/HBoxContainer/func_f/Button" to="CanvasLayer/HBoxContainer/func_f" method="_on_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/HBoxContainer2/ShowFuncF" to="." method="_on_show_func_f_pressed"]
+[connection signal="pressed" from="CanvasLayer/HBoxContainer2/ShowFuncDF" to="." method="_on_show_func_df_pressed"]
