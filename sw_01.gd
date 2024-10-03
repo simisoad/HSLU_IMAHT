@@ -86,8 +86,8 @@ func _input(event: InputEvent) -> void:
 func f(x: float) -> float:
 	var y: float
 	if not func_f_user_input and not set_function_by_user:
-		#y = 0.1*x**6 - 1.35*x**5 + 4.301*x**4 + 5.1055*x**3 - 30.4597*x**2 + 3.53804*x + 27.9063
-		y = 1.0/12.0*x**4 + 1.0/6.0*x**3 - x**2.0 - x
+		y = 0.1*x**6 - 1.35*x**5 + 4.301*x**4 + 5.1055*x**3 - 30.4597*x**2 + 3.53804*x + 27.9063
+		#y = 1.0/12.0*x**4 + 1.0/6.0*x**3 - x**2.0 - x
 	else:
 		if func_f_user_input:
 			y = func_f.calculate_function(x)
@@ -98,8 +98,8 @@ func f(x: float) -> float:
 func df(x: float) -> float:
 	var y: float
 	if not func_f_user_input and not set_function_by_user:
-		#y = 0.6*x**5 - 6.75*x**4 + 17.204*x**3 + 15.3165*x**2 - 60.9194*x + 3.53804
-		y = 1.0/3.0*x**3 + 1.0/2.0*x**2 - 2.0*x - 1.0
+		y = 0.6*x**5 - 6.75*x**4 + 17.204*x**3 + 15.3165*x**2 - 60.9194*x + 3.53804
+		#y = 1.0/3.0*x**3 + 1.0/2.0*x**2 - 2.0*x - 1.0
 	else:
 		if func_f_user_input:
 			y = func_f.calculate_derivation(x)
@@ -158,7 +158,8 @@ func minimizer(start, runden):
 		minimizer_reset = false
 		
 func _place_point(x,y):
-	print("point.x = " + str(x) + " point.y = " +str(y))
+	print("point: x = " + str(x) + " y = " +str(f(x)) + " df_y: " + str(y))
+	$CanvasLayer/HBoxContainer3/Label.text = "point: x = " + str(x) + " y = " +str(f(x)) + " df_y: " + str(y)
 	point_f.global_position = Vector2(x*scale_x,-y*scale_y)*100
 	point_df.global_position = Vector2(x*scale_x, -f(x)*scale_y)*100
 

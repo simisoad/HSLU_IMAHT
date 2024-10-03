@@ -14,8 +14,6 @@ font_size = 12
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_bxeep")
-min_x = -3.01
-max_x = 3.98
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -66,14 +64,19 @@ placeholder_text = "1.0"
 
 [node name="set_function_user" type="LineEdit" parent="CanvasLayer/HBoxContainer3"]
 unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(480, 0)
 layout_mode = 2
-text = "1.0"
+text = "1.0/12.0*x**4 + 1.0/6.0*x**3 - x**2.0 - x"
 placeholder_text = "1.0"
 
 [node name="Button" type="Button" parent="CanvasLayer/HBoxContainer3"]
+visible = false
 layout_mode = 2
 text = "set func"
+
+[node name="Label" type="Label" parent="CanvasLayer/HBoxContainer3"]
+layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
 anchors_preset = 2
