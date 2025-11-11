@@ -63,7 +63,7 @@ The `_ivp1_modified` function orchestrates the simulation loop. It repeatedly ca
 ### Running the Project
 1. Clone this repository:
    ```bash
-   git clone https://github.com/your-username/your-repo-name.git
+   git clone https://github.com/simisoad/HSLU_IMAHT
    ```
 2. Open the Godot Engine Project Manager.
 3. Click "Import" and navigate to the cloned project's `project.godot` file.
