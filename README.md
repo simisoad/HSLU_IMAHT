@@ -6,7 +6,6 @@ The project's primary goal is the accurate physical modeling of flight paths by 
 
 ![Simulation Screenshot](./Pic/Example.png)
 
-*(It is highly recommended to replace this placeholder image with a screenshot or, even better, a GIF of your simulation in action!)*
 
 ---
 
