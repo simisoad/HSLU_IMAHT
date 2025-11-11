@@ -1,52 +1,88 @@
-<img src="https://github.com/Bonkahe/SunshineClouds/blob/main/GithubStuff/ProcCloudsGithubLogo.png">
+# Advanced 3D Projectile Trajectory Simulator
 
-# SunshineClouds
+This is a 3D projectile and rocket trajectory simulator developed in the **Godot Engine**. It was created as a final project for a university course on *Nonlinear Optimization and Differential Equations in Computer Science* and was awarded the highest possible grade.
 
-## Updates:
-version 1.3:
-Added support for Godot 4.3, this is a breaking change, meaning that the cloud system as of this version will not support earlier versions of Godot, I apologize for this, but it is due to the reverse Z update for Godot, and unfortunately that was a little bit of a breaking update.
+The project's primary goal is the accurate physical modeling of flight paths by solving a custom system of differential equations, bypassing Godot's built-in physics engine to achieve a higher degree of control and realism for atmospheric flight.
 
-Project breakdown and usage explanation:
-[https://www.youtube.com/watch?v=8GCqIHHNDrg](https://www.youtube.com/watch?v=8GCqIHHNDrg)
+![Simulation Screenshot](./Pic/Example.png)
 
-This project is currently work in progress, but should be usable in game.
-Currently working on getting it on the Asset Library.
+*(It is highly recommended to replace this placeholder image with a screenshot or, even better, a GIF of your simulation in action!)*
 
-A procedural cloud system for Godot 4.3 designed from the ground up to be as extendable, and barebones as possible while still looking as good as possible.
+---
 
 ## Features
-* Fully volumetric clouds, extendable and performant up too 30km away from camera.
-* Extremely extendable, requires nothing to run beyond a single MeshInstance3D containing quad, can add other features later on.
-* Alternate more high quality lighting model which is more performance demanding.
-* Very barebones and simple script to set the material variables to the world (updates sun rotation, environment settings, fog etc.)
 
-## Installation
+- **Realistic Physics Model:** The simulation is governed by a system of Ordinary Differential Equations (ODEs) that account for:
+    - **Variable Gravity:** Gravitational force changes with altitude relative to the planet's center.
+    - **Atmospheric Drag:** A detailed atmospheric model where air density, temperature, and pressure vary across different atmospheric layers (Troposphere, Stratosphere, etc.).
+    - **Mach-Dependent Drag Coefficient:** The projectile's drag coefficient (`Cd`) is not a fixed value but is dynamically sampled from a curve based on its current Mach number, accurately modeling transonic and supersonic effects.
+    - **Engine Thrust:** Simulates projectiles with active thrust over a specified duration.
+- **Switchable Numerical Solvers:** Implements multiple numerical methods to solve the system of ODEs, allowing for comparison of accuracy and performance:
+    - **Runge-Kutta 4th Order (RK4)** (Default and adaptive versions)
+    - **Euler Method**
+    - **Velocity Verlet**
+    - **Symplectic Verlet**
+- **Nonlinear Optimization:** Includes an optimization module to solve complex problems, such as finding the optimal launch angle for maximum range using algorithms like:
+    - **Gradient Ascent**
+    - **Nelder-Mead Method**
+- **Comprehensive GUI:** A detailed user interface built with Godot's Control nodes allows for real-time manipulation of dozens of parameters, including:
+    - Projectile properties (mass, diameter, thrust force/duration, muzzle velocity).
+    - Planet properties (radius, density).
+    - Simulation parameters (numerical method, step size, tolerances).
+- **Advanced Visualization:**
+    - Real-time 3D rendering of the calculated trajectory.
+    - Trajectory path is color-coded based on velocity, providing instant visual feedback.
+    - Dynamic camera system with a free-look mode and a projectile follow-cam.
 
-1. Option A: Download Repo (zip works just fine)
-2. Option B: Download either online or via the in-editor asset library at this location: [https://godotengine.org/asset-library/asset/2372](https://godotengine.org/asset-library/asset/2372)
-3. Activate Plugin (Project->Project Settings->Plugins->SunshineClouds)
+---
 
-#### Installation Cont. Option A:
-1. Add ["CloudsPrefab.tscn"](https://github.com/Bonkahe/SunshineClouds/blob/main/addons/SunshineVolumetricClouds/CloudsPrefab.tscn) to your scene, works out of the gate, but will need to be plugged into your directional light and enviroment, also the quad will not automatically follow your camera, so if you get too far out of the origin point the clouds may disapear.
+## Technical Deep Dive
 
-#### Installation Cont. Option B:
-1. Add MeshInstance3D to your scene.
-2. Child the new MeshInstance3D to your camera, to ensure it does not get culled.
-3. Set new MeshInstance3D mesh to a quad mesh.
-4. Set new MeshInstance3D material to one of the quality settings in the SunShineClouds (Default, Low, High)
-5. Right click your scene node and add a new child Node of type "CloudsController"
-6. Set CloudsController SunLight to your scene Directional Light
-7. Add your environment to the WorldEnvironment variable in the CloudsController.
+### Core Physics Engine
+The simulation deliberately bypasses Godot's standard `RigidBody` physics. This was a crucial design decision to allow for the direct implementation and solution of the flight dynamics equations. The state of the projectile (position `[x, y, z]` and velocity `[vx, vy, vz]`) is represented as a state vector, and its evolution over time is calculated by the numerical solvers.
 
-## Contribution
-A couple important things to make note of here, this project is meant to as much as possible be a very bare bones system, I want it to be extended in peoples projects, to make it as multi-purpose as possible.
-To Keep in this style, any pull request with things like day night systems, or implemntation of more specific features, while very cool, will be declined. I want the system to be as light weight as possible and able to be
-implemented in as many projects as easily as possible.
-That being said if you do anything in these regards by all means make a new repo and send me a message, I will make an addons section in this readme with a link to your project.
+### The System of Differential Equations
+The function `_ode(t, state)` in `numerical_methods.gd` defines the core of the physics model. For any given state, it calculates the rate of change (the derivatives), which is the acceleration vector. This acceleration is the sum of all acting forces divided by the projectile's mass:
 
-### Current outstanding issues
-* Need reliable way to implement global shader variables when the plugin is installed.
+`d(state)/dt = [vx, vy, vz, Fx_net/m, Fy_net/m, Fz_net/m]`
 
+Where `F_net` is the vector sum of:
+1.  **Gravity (`g`):** A vector pointing towards the planet's center, with magnitude calculated using Newton's law of universal gravitation.
+2.  **Drag (`D`):** A vector opposing the velocity vector, calculated with the drag equation `D = 0.5 * ρ * v^2 * Cd * A`. The air density `ρ` and drag coefficient `Cd` are functions of altitude and velocity, respectively.
+3.  **Thrust (`T`):** A vector pointing in the direction of the velocity vector (for this implementation).
+
+### Numerical Integration
+The `_ivp1_modified` function orchestrates the simulation loop. It repeatedly calls a selected numerical method (like `_rk4b`) to step the simulation forward in time, accumulating the results to form a complete trajectory. An adaptive step-size version of RK4 is also included to dynamically adjust the time step `h` based on the estimated error, ensuring both accuracy and efficiency.
+
+---
+
+## Getting Started
+
+### Prerequisites
+- [Godot Engine (version 4.x)](https://godotengine.org/)
+
+### Running the Project
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/your-username/your-repo-name.git
+   ```
+2. Open the Godot Engine Project Manager.
+3. Click "Import" and navigate to the cloned project's `project.godot` file.
+4. Once imported, select the project and click "Run" (or press F5).
+
+---
+
+## How to Use
+
+- Use the **"Options"** panel on the left to configure all simulation and projectile parameters.
+- Press the **Spacebar** to start the simulation with the current settings.
+- Use **WASD** to move the free-look camera, and hold the **right mouse button** to rotate your view.
+- Press **F** (configurable) to toggle the projectile follow-camera.
+- Click the **"Clear all Trajectories"** button to clear previous flight paths from the screen.
+- To run an optimization, press the corresponding key (e.g., `R`) as defined in `main_node.gd`.
+
+---
 
 ## License
-This plugin has been released under the [MIT License](https://github.com/Bonkahe/SunshineClouds/blob/main/LICENSE).
+
+This project is licensed under the MIT License - see the `LICENSE` file for details.
