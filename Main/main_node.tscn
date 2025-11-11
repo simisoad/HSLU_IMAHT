@@ -1,0 +1,299 @@
+[gd_scene load_steps=32 format=3 uid="uid://comp4v2qgqy0j"]
+
+[ext_resource type="Script" path="res://Main/main_node.gd" id="1_5kt2v"]
+[ext_resource type="PackedScene" uid="uid://bu67q2e6ynxhi" path="res://Simulation/simulation_node.tscn" id="2_rkdto"]
+[ext_resource type="PackedScene" uid="uid://di730if76oydv" path="res://Trajectory/trajectory.tscn" id="3_eutvg"]
+[ext_resource type="PackedScene" uid="uid://cfh5oxl5n6non" path="res://Visualization/visualization_node.tscn" id="3_ski1j"]
+[ext_resource type="PackedScene" uid="uid://ld32yp8hqyvx" path="res://Numerical/numerical_methods.tscn" id="4_hry7y"]
+[ext_resource type="PackedScene" uid="uid://bvyh5youubk45" path="res://Cameras/FreeCamera.tscn" id="5_tvy12"]
+[ext_resource type="Texture2D" uid="uid://dq5vctrinr8pc" path="res://World/EarthModel_world.topo.bathy.200411.png" id="6_3bifg"]
+[ext_resource type="Script" path="res://World/planet.gd" id="6_544pv"]
+[ext_resource type="Shader" path="res://World/Atmosphere/atmosphere.gdshader" id="8_e17lc"]
+[ext_resource type="PackedScene" uid="uid://cfn7cgpw7wgs3" path="res://Optimization/optimization_node.tscn" id="8_r0ydw"]
+[ext_resource type="Script" path="res://Main/projectile_start_pos.gd" id="9_axr8d"]
+[ext_resource type="PackedScene" uid="uid://dq80qek1b5x" path="res://GUI/simulation_gui.tscn" id="9_o5sj1"]
+[ext_resource type="PackedScene" uid="uid://fnpqj8fc7i5w" path="res://2DGraph/2d_graph.tscn" id="12_sty58"]
+[ext_resource type="Script" path="res://Main/titel.gd" id="14_fhxi8"]
+[ext_resource type="Script" path="res://Main/control.gd" id="14_wic16"]
+[ext_resource type="Script" path="res://Main/fragen.gd" id="15_doyrc"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_hnyd0"]
+radius = 1000.0
+height = 2000.0
+radial_segments = 128
+rings = 64
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_07lj2"]
+albedo_texture = ExtResource("6_3bifg")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_akvo7"]
+margin = 0.01
+radius = 1000.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_6bgn6"]
+radius = 1013.3
+height = 2026.61
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ehgwq"]
+render_priority = 0
+shader = ExtResource("8_e17lc")
+shader_parameter/albedo = Color(0, 0.494118, 0.811765, 0.686275)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = null
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vayej"]
+render_priority = 0
+shader = ExtResource("8_e17lc")
+shader_parameter/albedo = Color(0, 0.49376, 0.811556, 0.454902)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = null
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bnlso"]
+render_priority = 0
+shader = ExtResource("8_e17lc")
+shader_parameter/albedo = Color(0.0032703, 0.157397, 0.28162, 0.321569)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = null
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_6ytw7"]
+size = Vector2(200000, 200000)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cjo3g"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_g0aww"]
+material = SubResource("StandardMaterial3D_cjo3g")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_evg0d"]
+top_radius = 0.01
+bottom_radius = 0.1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0yfno"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_cmr0c"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_flyf5"]
+texture = SubResource("CanvasTexture_cmr0c")
+
+[sub_resource type="LabelSettings" id="LabelSettings_bwjy8"]
+font_size = 64
+font_color = Color(0, 0, 0, 1)
+
+[node name="MainNode" type="Node"]
+script = ExtResource("1_5kt2v")
+
+[node name="SimulationNode" parent="." instance=ExtResource("2_rkdto")]
+
+[node name="Trajectory" parent="." instance=ExtResource("3_eutvg")]
+
+[node name="VisualizationNode" parent="." instance=ExtResource("3_ski1j")]
+
+[node name="NumericalMethods" parent="." instance=ExtResource("4_hry7y")]
+
+[node name="Planet" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+mesh = SubResource("SphereMesh_hnyd0")
+surface_material_override/0 = SubResource("StandardMaterial3D_07lj2")
+script = ExtResource("6_544pv")
+metadata/_edit_lock_ = true
+
+[node name="WorldArea3D" type="StaticBody3D" parent="Planet"]
+
+[node name="WorldCollisionShape3D" type="CollisionShape3D" parent="Planet/WorldArea3D"]
+process_mode = 3
+shape = SubResource("SphereShape3D_akvo7")
+
+[node name="Atmosphere" type="Node3D" parent="Planet/WorldArea3D"]
+unique_name_in_owner = true
+visible = false
+
+[node name="Troposphere" type="MeshInstance3D" parent="Planet/WorldArea3D/Atmosphere"]
+mesh = SubResource("SphereMesh_6bgn6")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("ShaderMaterial_ehgwq")
+
+[node name="Stratosphere" type="MeshInstance3D" parent="Planet/WorldArea3D/Atmosphere"]
+mesh = SubResource("SphereMesh_6bgn6")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("ShaderMaterial_vayej")
+
+[node name="Mesosphere" type="MeshInstance3D" parent="Planet/WorldArea3D/Atmosphere"]
+mesh = SubResource("SphereMesh_6bgn6")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("ShaderMaterial_bnlso")
+
+[node name="OptimizationNode" parent="." instance=ExtResource("8_r0ydw")]
+
+[node name="SimulationGUI" parent="." instance=ExtResource("9_o5sj1")]
+unique_name_in_owner = true
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.97237, 0.233445, 0, -0.233445, 0.97237, -1.75758, 12.9926, -37.0651)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("PlaneMesh_6ytw7")
+
+[node name="StartPos" type="Marker3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1000, 0)
+script = ExtResource("9_axr8d")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="StartPos"]
+visible = false
+mesh = SubResource("CylinderMesh_g0aww")
+skeleton = NodePath("../..")
+
+[node name="FreeViewCamera" parent="StartPos" instance=ExtResource("5_tvy12")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.84923, 16.0432)
+camara_height_max = 80000.0
+camera_max_x = 3e+06
+camera_min_x = -300000.0
+camera_max_z = 3e+06
+camera_min_z = -3e+06
+
+[node name="StartDirectionRotation" type="Node3D" parent="StartPos"]
+unique_name_in_owner = true
+
+[node name="StartDirection" type="MeshInstance3D" parent="StartPos/StartDirectionRotation"]
+unique_name_in_owner = true
+mesh = SubResource("CylinderMesh_evg0d")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_0yfno")
+
+[node name="Graph2D" parent="." instance=ExtResource("12_sty58")]
+unique_name_in_owner = true
+visible = false
+
+[node name="Titel" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("14_fhxi8")
+
+[node name="Panel" type="Panel" parent="Titel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_flyf5")
+
+[node name="Label" type="Label" parent="Titel/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -620.5
+offset_top = -43.0
+offset_right = 620.5
+offset_bottom = 43.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Präsentation
+3D Simulation von Geschossen und Raketen
+Simon Bühlmann"
+label_settings = SubResource("LabelSettings_bwjy8")
+horizontal_alignment = 1
+
+[node name="Fragen" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("15_doyrc")
+
+[node name="Panel" type="Panel" parent="Fragen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_flyf5")
+
+[node name="Label" type="Label" parent="Fragen/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -620.5
+offset_top = -43.0
+offset_right = 620.5
+offset_bottom = 43.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Fragen?"
+label_settings = SubResource("LabelSettings_bwjy8")
+horizontal_alignment = 1
+
+[node name="Ende2" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("14_wic16")
+
+[node name="Panel" type="Panel" parent="Ende2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_flyf5")
+
+[node name="Label" type="Label" parent="Ende2/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -620.5
+offset_top = -43.0
+offset_right = 620.5
+offset_bottom = 43.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Herzlichen Dank für Ihre Aufmerksamkeit!
+"
+label_settings = SubResource("LabelSettings_bwjy8")
+horizontal_alignment = 1

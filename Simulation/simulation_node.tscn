@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bu67q2e6ynxhi"]
+
+[ext_resource type="Script" path="res://Simulation/simulation_node.gd" id="1_jc806"]
+
+[node name="SimulationNode" type="Node"]
+script = ExtResource("1_jc806")
+
+[connection signal="start_simulation_signal" from="." to="." method="_on_start_simulation"]

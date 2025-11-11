@@ -1,0 +1,50 @@
+[gd_scene load_steps=11 format=3 uid="uid://comp4v2qgqy0j"]
+
+[ext_resource type="Script" path="res://Main/main_node.gd" id="1_5kt2v"]
+[ext_resource type="PackedScene" uid="uid://bu67q2e6ynxhi" path="res://Simulation/simulation_node.tscn" id="2_rkdto"]
+[ext_resource type="PackedScene" uid="uid://di730if76oydv" path="res://Trajectory/trajectory.tscn" id="3_eutvg"]
+[ext_resource type="PackedScene" uid="uid://cfh5oxl5n6non" path="res://Visualization/visualization_node.tscn" id="3_ski1j"]
+[ext_resource type="PackedScene" uid="uid://ld32yp8hqyvx" path="res://Numerical/numerical_methods.tscn" id="4_hry7y"]
+[ext_resource type="PackedScene" uid="uid://bvyh5youubk45" path="res://Cameras/FreeCamera.tscn" id="5_tvy12"]
+[ext_resource type="Script" path="res://Parameters/settings.gd" id="7_wm3o7"]
+[ext_resource type="PackedScene" uid="uid://cfn7cgpw7wgs3" path="res://Optimization/optimization_node.tscn" id="8_r0ydw"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_72aqk"]
+size = Vector2(50000, 50000)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r56wm"]
+albedo_color = Color(2.40654e-07, 0.53744, 0.165273, 1)
+
+[node name="MainNode" type="Node"]
+script = ExtResource("1_5kt2v")
+
+[node name="Settings" type="Node" parent="."]
+script = ExtResource("7_wm3o7")
+visualize_projectile = false
+projectile_has_thrust = true
+projectile_muzzle_velocity = 100.0
+projectile_drag_coefficient = 0.011
+projectile_mass = 40.0
+height_above_sea_level = 0.0
+numerical_method = 1
+
+[node name="SimulationNode" parent="." instance=ExtResource("2_rkdto")]
+
+[node name="Trajectory" parent="." instance=ExtResource("3_eutvg")]
+
+[node name="VisualizationNode" parent="." instance=ExtResource("3_ski1j")]
+
+[node name="NumericalMethods" parent="." instance=ExtResource("4_hry7y")]
+
+[node name="FreeViewCamera" parent="." instance=ExtResource("5_tvy12")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 8)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 61.0787, 96.7075)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("QuadMesh_72aqk")
+surface_material_override/0 = SubResource("StandardMaterial3D_r56wm")
+
+[node name="OptimizationNode" parent="." instance=ExtResource("8_r0ydw")]

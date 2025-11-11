@@ -1,0 +1,73 @@
+[gd_scene load_steps=9 format=3 uid="uid://cfh5oxl5n6non"]
+
+[ext_resource type="Script" path="res://Visualization/visualization_node.gd" id="1_c0o0m"]
+[ext_resource type="ArrayMesh" uid="uid://bskiehoe6bk1m" path="res://Projectiles/155mmShell/155mmShell_mesh.tres" id="2_af8ar"]
+[ext_resource type="PackedScene" uid="uid://fi7ya3iujr4" path="res://Cameras/follow_camera_3d.tscn" id="3_12rbl"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_etp66"]
+top_radius = 0.01
+bottom_radius = 0.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tb6f7"]
+transparency = 1
+albedo_color = Color(1, 0.294118, 0, 0.878431)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5t71x"]
+albedo_color = Color(1, 0.301961, 0.223529, 1)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_s2jq0"]
+angle_min = 1.07288e-05
+angle_max = 360.0
+direction = Vector3(0, 1, 0)
+spread = 42.166
+initial_velocity_max = 97.74
+scale_max = 5.0
+scale_over_velocity_max = 56.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_g162x"]
+size = Vector3(0.1, 0.1, 0.1)
+
+[node name="VisualizationNode" type="Node3D"]
+script = ExtResource("1_c0o0m")
+
+[node name="ProjectileMesh" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.78814e-07, 0)
+mesh = ExtResource("2_af8ar")
+
+[node name="SpeedLabel3D" type="Label3D" parent="ProjectileMesh"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.802005, 0.979319, 0)
+billboard = 2
+text = "Speed:"
+
+[node name="ThrustMesh" type="MeshInstance3D" parent="ProjectileMesh"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.12462, 0)
+visible = false
+mesh = SubResource("CylinderMesh_etp66")
+surface_material_override/0 = SubResource("StandardMaterial3D_tb6f7")
+
+[node name="Explosion" type="GPUParticles3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.78814e-07, 0)
+material_override = SubResource("StandardMaterial3D_5t71x")
+transparency = 0.41
+emitting = false
+amount = 250
+lifetime = 10.0
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_s2jq0")
+draw_pass_1 = SubResource("BoxMesh_g162x")
+
+[node name="CameraRotation" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 1.78814e-07, 0)
+
+[node name="camera_rotation_x" type="Node3D" parent="CameraRotation"]
+
+[node name="FollowCamera3D" parent="CameraRotation/camera_rotation_x" node_paths=PackedStringArray("camera_rotation", "camera_rotation_x") instance=ExtResource("3_12rbl")]
+unique_name_in_owner = true
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 26.2531, 0, 0)
+camera_rotation = NodePath("../..")
+camera_rotation_x = NodePath("..")

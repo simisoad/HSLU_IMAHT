@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cfn7cgpw7wgs3"]
+
+[ext_resource type="Script" path="res://Optimization/optimization_node.gd" id="1_nfcgj"]
+
+[node name="OptimizationNode" type="Node"]
+script = ExtResource("1_nfcgj")

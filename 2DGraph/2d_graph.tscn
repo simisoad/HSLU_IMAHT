@@ -1,0 +1,123 @@
+[gd_scene load_steps=6 format=3 uid="uid://fnpqj8fc7i5w"]
+
+[ext_resource type="Script" path="res://2DGraph/2d_graph.gd" id="1_jkh2w"]
+[ext_resource type="Script" path="res://2DGraph/grid2d.gd" id="1_xlrgd"]
+[ext_resource type="Script" path="res://2DGraph/camera_2d.gd" id="2_6abak"]
+[ext_resource type="Script" path="res://2DGraph/xy_axis.gd" id="2_cep3r"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_2film"]
+radius = 1000.0
+height = 2000.0
+
+[node name="2DGraph" type="Window"]
+initial_position = 1
+size = Vector2i(800, 600)
+content_scale_mode = 1
+script = ExtResource("1_jkh2w")
+
+[node name="2DGraph" type="Node" parent="."]
+unique_name_in_owner = true
+
+[node name="Marker2D" type="Marker2D" parent="2DGraph"]
+position = Vector2(-373, -730)
+
+[node name="Earth2D" type="MeshInstance2D" parent="2DGraph"]
+unique_name_in_owner = true
+visible = false
+modulate = Color(0.239216, 1, 0.760784, 1)
+mesh = SubResource("SphereMesh_2film")
+
+[node name="EarthMiddle" type="Marker2D" parent="2DGraph/Earth2D"]
+unique_name_in_owner = true
+
+[node name="Camera2D" type="Camera2D" parent="2DGraph/Earth2D/EarthMiddle"]
+unique_name_in_owner = true
+position = Vector2(32, -18)
+zoom = Vector2(0.1, 0.1)
+script = ExtResource("2_6abak")
+
+[node name="startpos" type="Marker2D" parent="2DGraph/Earth2D"]
+unique_name_in_owner = true
+position = Vector2(40, -1017)
+
+[node name="grid" type="Node2D" parent="2DGraph"]
+script = ExtResource("1_xlrgd")
+
+[node name="xy-axis" type="Node2D" parent="2DGraph"]
+script = ExtResource("2_cep3r")
+
+[node name="AtmosphereHeight" type="Line2D" parent="2DGraph"]
+unique_name_in_owner = true
+default_color = Color(0.376471, 1, 1, 1)
+
+[node name="GraphTrajectoryLine2D" type="Line2D" parent="2DGraph"]
+unique_name_in_owner = true
+
+[node name="GraphHeightVSTimeLine2D" type="Line2D" parent="2DGraph"]
+unique_name_in_owner = true
+
+[node name="GraphSpeedVSTimeLine2D" type="Line2D" parent="2DGraph"]
+unique_name_in_owner = true
+default_color = Color(1, 0, 0, 1)
+
+[node name="GraphDragVSTimeLine2D" type="Line2D" parent="2DGraph"]
+unique_name_in_owner = true
+default_color = Color(0, 0.554667, 0.902941, 1)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Options" type="Control" parent="CanvasLayer"]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Options"]
+layout_mode = 0
+offset_right = 152.0
+offset_bottom = 31.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Options/PanelContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Options/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TogglePlanetCheckButton" type="CheckButton" parent="CanvasLayer/Options/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Toggle Planet"
+
+[node name="HeigtVSTimeCheckButton" type="CheckButton" parent="CanvasLayer/Options/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Heigt/Time
+"
+
+[node name="SpeedVSTimeCheckButton" type="CheckButton" parent="CanvasLayer/Options/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Speed/Time
+"
+
+[node name="DragVSTimeCheckButton" type="CheckButton" parent="CanvasLayer/Options/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Drag/Time"
+
+[node name="TrajectoryCheckButton" type="CheckButton" parent="CanvasLayer/Options/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Trajectory"
+
+[connection signal="close_requested" from="." to="." method="_on_close_requested"]
+[connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
+[connection signal="focus_exited" from="." to="." method="_on_focus_exited"]
+[connection signal="toggled" from="CanvasLayer/Options/PanelContainer/VBoxContainer/HBoxContainer/TogglePlanetCheckButton" to="." method="_on_toggle_planet_check_button_toggled"]
+[connection signal="toggled" from="CanvasLayer/Options/PanelContainer/VBoxContainer/HBoxContainer/HeigtVSTimeCheckButton" to="." method="_on_heigt_vs_time_check_button_toggled"]
+[connection signal="toggled" from="CanvasLayer/Options/PanelContainer/VBoxContainer/HBoxContainer/SpeedVSTimeCheckButton" to="." method="_on_speed_vs_time_check_button_toggled"]
+[connection signal="toggled" from="CanvasLayer/Options/PanelContainer/VBoxContainer/HBoxContainer/DragVSTimeCheckButton" to="." method="_on_drag_vs_time_check_button_toggled"]
+[connection signal="toggled" from="CanvasLayer/Options/PanelContainer/VBoxContainer/HBoxContainer/TrajectoryCheckButton" to="." method="_on_trajectory_check_button_toggled"]

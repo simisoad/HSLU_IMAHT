@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://ld32yp8hqyvx"]
+
+[ext_resource type="Script" path="res://Numerical/numerical_methods.gd" id="1_jt3gc"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_1vigo"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v46p6"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yim4i"]
+albedo_color = Color(0, 0.317647, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r0wg0"]
+albedo_color = Color(0.701961, 0.235294, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_jvwcv"]
+radius = 1.0
+height = 2.0
+
+[node name="NumericalMethods" type="Node"]
+script = ExtResource("1_jt3gc")
+
+[node name="UnderEarthVisualizer" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+visible = false
+mesh = SubResource("SphereMesh_1vigo")
+surface_material_override/0 = SubResource("StandardMaterial3D_v46p6")
+
+[node name="OverEarthVisualizer" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+visible = false
+mesh = SubResource("SphereMesh_1vigo")
+surface_material_override/0 = SubResource("StandardMaterial3D_yim4i")
+
+[node name="HitPoint" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+visible = false
+mesh = SubResource("SphereMesh_1vigo")
+surface_material_override/0 = SubResource("StandardMaterial3D_r0wg0")
+
+[node name="InterpolateRaycast" type="RayCast3D" parent="."]
+unique_name_in_owner = true
+debug_shape_thickness = 5
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("SphereMesh_jvwcv")
+
+[connection signal="start_calculations_signal" from="." to="." method="_on_start_calculations_signal"]

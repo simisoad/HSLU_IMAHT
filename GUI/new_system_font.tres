@@ -1,0 +1,5 @@
+[gd_resource type="SystemFont" format=3 uid="uid://biq881bp0kcgc"]
+
+[resource]
+font_names = PackedStringArray("Gadugi")
+oversampling = 4.6

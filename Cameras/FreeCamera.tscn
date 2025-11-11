@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://bvyh5youubk45"]
+
+[ext_resource type="Script" path="res://Cameras/free_camera.gd" id="1_5xx8y"]
+[ext_resource type="Script" path="res://Cameras/get_3d_position_from_mouse.gd" id="2_cffwn"]
+
+[node name="FreeViewCamera" type="Node3D"]
+script = ExtResource("1_5xx8y")
+speed_movement_xz = 2.5
+speed_movement_up_down = 2.5
+
+[node name="Gimbal" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="InnerGimbal" type="Node3D" parent="Gimbal"]
+unique_name_in_owner = true
+
+[node name="Camera3D" type="Camera3D" parent="Gimbal/InnerGimbal"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 1.06581e-14, 0, -1.06581e-14, 1, 0, 0, 0)
+current = true
+far = 400000.0
+
+[node name="Get3DPositionFromMouse" type="Node3D" parent="." node_paths=PackedStringArray("camera")]
+transform = Transform3D(1, 0, 0, 0, 1, 1.06581e-14, 0, -1.06581e-14, 1, 0, 0, 0)
+script = ExtResource("2_cffwn")
+camera = NodePath("../Gimbal/InnerGimbal/Camera3D")

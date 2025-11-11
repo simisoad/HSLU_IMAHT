@@ -1,0 +1,9 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://chqugwo2148it"]
+
+[ext_resource type="SystemFont" uid="uid://biq881bp0kcgc" path="res://GUI/new_system_font.tres" id="1_u1jax"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6j7gd"]
+
+[resource]
+Label/fonts/font = ExtResource("1_u1jax")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_6j7gd")

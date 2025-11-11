@@ -1,0 +1,48 @@
+[gd_scene load_steps=3 format=3 uid="uid://dq80qek1b5x"]
+
+[ext_resource type="Script" path="res://GUI/simulation_gui.gd" id="1_cryyx"]
+[ext_resource type="PackedScene" uid="uid://jt8hlf36qkb2" path="res://GUI/simulation_options_gui.tscn" id="2_6a2or"]
+
+[node name="SimulationGUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 1
+script = ExtResource("1_cryyx")
+
+[node name="SimulationOptions" parent="." instance=ExtResource("2_6a2or")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+
+[node name="OptionsButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+toggle_mode = true
+keep_pressed_outside = true
+text = "Options"
+
+[node name="ClearAllTrajectoriesButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+toggle_mode = true
+keep_pressed_outside = true
+text = "Clear all Trajectories"
+
+[connection signal="pressed" from="HBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="toggled" from="HBoxContainer/OptionsButton" to="." method="_on_options_button_toggled"]
+[connection signal="toggled" from="HBoxContainer/ClearAllTrajectoriesButton" to="." method="_on_clear_all_trajectories_button_toggled"]

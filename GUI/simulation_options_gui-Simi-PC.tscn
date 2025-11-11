@@ -1,0 +1,336 @@
+[gd_scene load_steps=6 format=3 uid="uid://jt8hlf36qkb2"]
+
+[ext_resource type="Script" path="res://GUI/simulation_options_gui.gd" id="1_buuda"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_fjo37"]
+font_size = 24
+
+[sub_resource type="Theme" id="Theme_xu01j"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_w5lnl"]
+font_size = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_amyvh"]
+font_size = 20
+
+[node name="SimulationOptions" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_buuda")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(0.75, 0.75)
+
+[node name="Options" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Options"
+label_settings = SubResource("LabelSettings_fjo37")
+horizontal_alignment = 1
+
+[node name="VisualizeProjectileContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_xu01j")
+
+[node name="VisualizeProjectileLabel" type="Label" parent="VBoxContainer/VisualizeProjectileContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Visualize Projectile:"
+vertical_alignment = 1
+
+[node name="VisualizeProjectile" type="CheckButton" parent="VBoxContainer/VisualizeProjectileContainer"]
+unique_name_in_owner = true
+layout_direction = 1
+layout_mode = 2
+
+[node name="SimulationSpeedContainer" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="SimulationSpeedLabel" type="Label" parent="VBoxContainer/SimulationSpeedContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+text = "Simulation Speed:"
+vertical_alignment = 1
+
+[node name="SimulationSpeedSlider" type="HSlider" parent="VBoxContainer/SimulationSpeedContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 0.1
+max_value = 10.0
+step = 0.1
+value = 0.1
+
+[node name="ProjectileSettings" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "
+Projectile Settings
+"
+label_settings = SubResource("LabelSettings_w5lnl")
+horizontal_alignment = 1
+
+[node name="ProjectileStartPosContainer" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="ProjectileStartPosLabel" type="Label" parent="VBoxContainer/ProjectileStartPosContainer"]
+layout_mode = 2
+text = "Projectile start Pos:"
+
+[node name="xyz" type="HBoxContainer" parent="VBoxContainer/ProjectileStartPosContainer"]
+layout_mode = 2
+
+[node name="x_Label" type="Label" parent="VBoxContainer/ProjectileStartPosContainer/xyz"]
+layout_mode = 2
+text = "x:"
+
+[node name="x_LineEdit" type="LineEdit" parent="VBoxContainer/ProjectileStartPosContainer/xyz"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="y_Label" type="Label" parent="VBoxContainer/ProjectileStartPosContainer/xyz"]
+layout_mode = 2
+text = "y:
+"
+
+[node name="y_LineEdit" type="LineEdit" parent="VBoxContainer/ProjectileStartPosContainer/xyz"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="z_Label" type="Label" parent="VBoxContainer/ProjectileStartPosContainer/xyz"]
+layout_mode = 2
+text = "z:"
+
+[node name="z_LineEdit" type="LineEdit" parent="VBoxContainer/ProjectileStartPosContainer/xyz"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ProjectileHasThrustContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="ProjectileHasThrustLabel" type="Label" parent="VBoxContainer/ProjectileHasThrustContainer"]
+layout_mode = 2
+text = "Projectile has Thrust:"
+
+[node name="ProjectileHasThrust" type="CheckButton" parent="VBoxContainer/ProjectileHasThrustContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ProjectileThrustForceContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="ProjectileThrustForceLabel" type="Label" parent="VBoxContainer/ProjectileThrustForceContainer"]
+layout_mode = 2
+text = "Projectile Thrust Force:"
+
+[node name="ProjectileThrustForceLineEdit" type="LineEdit" parent="VBoxContainer/ProjectileThrustForceContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Newton" type="Label" parent="VBoxContainer/ProjectileThrustForceContainer"]
+layout_mode = 2
+text = "n"
+
+[node name="ProjectileThrustDurationContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="ProjectileThrustDurationLabel" type="Label" parent="VBoxContainer/ProjectileThrustDurationContainer"]
+layout_mode = 2
+text = "Projectile Thrust Duration:"
+
+[node name="ProjectileThrustDurationLineEdit" type="LineEdit" parent="VBoxContainer/ProjectileThrustDurationContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="s" type="Label" parent="VBoxContainer/ProjectileThrustDurationContainer"]
+layout_mode = 2
+text = "s"
+
+[node name="ProjectileMuzzleVelocityContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="ProjectileMuzzleVelocityLabel" type="Label" parent="VBoxContainer/ProjectileMuzzleVelocityContainer"]
+layout_mode = 2
+text = "Projectile Muzzle Velocity:"
+
+[node name="ProjectileMuzzleVelocityLineEdit" type="LineEdit" parent="VBoxContainer/ProjectileMuzzleVelocityContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="m_s" type="Label" parent="VBoxContainer/ProjectileMuzzleVelocityContainer"]
+layout_mode = 2
+text = "m/s"
+
+[node name="ProjectileDragCoefficientContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="ProjectileDragCoefficientLabel" type="Label" parent="VBoxContainer/ProjectileDragCoefficientContainer"]
+layout_mode = 2
+text = "Projectile Drag Coefficient"
+
+[node name="ProjectileDragCoefficientLineEdit" type="LineEdit" parent="VBoxContainer/ProjectileDragCoefficientContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ProjectileDiameterContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="ProjectileDiameterLabel" type="Label" parent="VBoxContainer/ProjectileDiameterContainer"]
+layout_mode = 2
+text = "Projectile Diameter:"
+
+[node name="ProjectileDiameterLineEdit" type="LineEdit" parent="VBoxContainer/ProjectileDiameterContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="m2" type="Label" parent="VBoxContainer/ProjectileDiameterContainer"]
+layout_mode = 2
+text = "m"
+
+[node name="ProjectileAreaContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="ProjectileAreaLabel" type="Label" parent="VBoxContainer/ProjectileAreaContainer"]
+layout_mode = 2
+text = "Projectile Area:"
+
+[node name="ProjectileAreaLineEdit" type="LineEdit" parent="VBoxContainer/ProjectileAreaContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="m2" type="Label" parent="VBoxContainer/ProjectileAreaContainer"]
+layout_mode = 2
+text = "m2"
+
+[node name="ProjectileMassContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="ProjectileMassLabel" type="Label" parent="VBoxContainer/ProjectileMassContainer"]
+layout_mode = 2
+text = "Projectile Mass:"
+
+[node name="ProjectileMassLineEdit" type="LineEdit" parent="VBoxContainer/ProjectileMassContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="m2" type="Label" parent="VBoxContainer/ProjectileMassContainer"]
+layout_mode = 2
+text = "kg"
+
+[node name="ProjectilePhiXYContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="ProjectilePhiXYLabel" type="Label" parent="VBoxContainer/ProjectilePhiXYContainer"]
+layout_mode = 2
+text = "Projectile Phi (xy):"
+
+[node name="ProjectilePhiXYLineEdit" type="LineEdit" parent="VBoxContainer/ProjectilePhiXYContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ProjectileThetaInclinationContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="ProjectileThetaInclinationLabel" type="Label" parent="VBoxContainer/ProjectileThetaInclinationContainer"]
+layout_mode = 2
+text = "Projectile Theta (Inclination):"
+
+[node name="ProjectileThetaInclinationLineEdit" type="LineEdit" parent="VBoxContainer/ProjectileThetaInclinationContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HeightAboveSeaLevelContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="HeightAboveSeaLevelLabel" type="Label" parent="VBoxContainer/HeightAboveSeaLevelContainer"]
+layout_mode = 2
+text = "Height above sea level:"
+
+[node name="HeightAboveSeaLevelLineEdit" type="LineEdit" parent="VBoxContainer/HeightAboveSeaLevelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="m" type="Label" parent="VBoxContainer/HeightAboveSeaLevelContainer"]
+layout_mode = 2
+text = "m"
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "
+Numerical Methods:"
+label_settings = SubResource("LabelSettings_amyvh")
+horizontal_alignment = 1
+
+[node name="NumericalMethodContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="NumericalMethodLabel" type="Label" parent="VBoxContainer/NumericalMethodContainer"]
+layout_mode = 2
+text = "Numerical Mehtod:"
+
+[node name="NumericalMethod" type="OptionButton" parent="VBoxContainer/NumericalMethodContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+selected = 0
+item_count = 4
+popup/item_0/text = "RK4"
+popup/item_1/text = "Euler"
+popup/item_1/id = 1
+popup/item_2/text = "SymplecticVerlet"
+popup/item_2/id = 2
+popup/item_3/text = "VelocityVerlet"
+popup/item_3/id = 3
+
+[node name="IvpStepSizeContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="IvpStepSizeLabel" type="Label" parent="VBoxContainer/IvpStepSizeContainer"]
+layout_mode = 2
+text = "Ivp Step Size:"
+
+[node name="IvpStepSizeLineEdit" type="LineEdit" parent="VBoxContainer/IvpStepSizeContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[connection signal="toggled" from="VBoxContainer/VisualizeProjectileContainer/VisualizeProjectile" to="." method="_on_visualize_projectile_toggled"]
+[connection signal="value_changed" from="VBoxContainer/SimulationSpeedContainer/SimulationSpeedSlider" to="." method="_on_simulation_speed_slider_value_changed"]
+[connection signal="text_changed" from="VBoxContainer/ProjectileStartPosContainer/xyz/x_LineEdit" to="." method="_on_x_line_edit_text_changed"]
+[connection signal="text_changed" from="VBoxContainer/ProjectileStartPosContainer/xyz/y_LineEdit" to="." method="_on_y_line_edit_text_changed"]
+[connection signal="text_changed" from="VBoxContainer/ProjectileStartPosContainer/xyz/z_LineEdit" to="." method="_on_z_line_edit_text_changed"]
+[connection signal="toggled" from="VBoxContainer/ProjectileHasThrustContainer/ProjectileHasThrust" to="." method="_on_projectile_has_thrust_toggled"]
+[connection signal="text_changed" from="VBoxContainer/ProjectileThrustForceContainer/ProjectileThrustForceLineEdit" to="." method="_on_projectile_thrust_force_line_edit_text_changed"]
+[connection signal="text_changed" from="VBoxContainer/ProjectileThrustDurationContainer/ProjectileThrustDurationLineEdit" to="." method="_on_projectile_thrust_duration_line_edit_text_changed"]
+[connection signal="text_changed" from="VBoxContainer/ProjectileMuzzleVelocityContainer/ProjectileMuzzleVelocityLineEdit" to="." method="_on_projectile_muzzle_velocity_line_edit_text_changed"]
+[connection signal="text_changed" from="VBoxContainer/ProjectileDragCoefficientContainer/ProjectileDragCoefficientLineEdit" to="." method="_on_projectile_drag_coefficient_line_edit_text_changed"]
+[connection signal="text_changed" from="VBoxContainer/ProjectileDiameterContainer/ProjectileDiameterLineEdit" to="." method="_on_projectile_diameter_line_edit_text_changed"]
+[connection signal="text_changed" from="VBoxContainer/ProjectileAreaContainer/ProjectileAreaLineEdit" to="." method="_on_projectile_area_line_edit_text_changed"]
+[connection signal="text_changed" from="VBoxContainer/ProjectileMassContainer/ProjectileMassLineEdit" to="." method="_on_projectile_mass_line_edit_text_changed"]
+[connection signal="text_changed" from="VBoxContainer/ProjectilePhiXYContainer/ProjectilePhiXYLineEdit" to="." method="_on_projectile_phi_xy_line_edit_text_changed"]
+[connection signal="text_changed" from="VBoxContainer/ProjectileThetaInclinationContainer/ProjectileThetaInclinationLineEdit" to="." method="_on_projectile_theta_inclination_line_edit_text_changed"]
+[connection signal="text_changed" from="VBoxContainer/HeightAboveSeaLevelContainer/HeightAboveSeaLevelLineEdit" to="." method="_on_height_above_sea_level_line_edit_text_changed"]
+[connection signal="item_selected" from="VBoxContainer/NumericalMethodContainer/NumericalMethod" to="." method="_on_numerical_method_item_selected"]
+[connection signal="text_changed" from="VBoxContainer/IvpStepSizeContainer/IvpStepSizeLineEdit" to="." method="_on_ivp_step_size_line_edit_text_changed"]

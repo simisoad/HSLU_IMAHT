@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://di730if76oydv"]
+
+[ext_resource type="Script" path="res://Trajectory/trajectory.gd" id="1_j8ea2"]
+
+[node name="Trajectory" type="Node3D"]
+script = ExtResource("1_j8ea2")
