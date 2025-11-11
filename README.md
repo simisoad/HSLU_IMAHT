@@ -1,7 +1,9 @@
 # Advanced 3D Projectile Trajectory Simulator
+
 [![Godot Version](https://img.shields.io/badge/Godot-4.x-blue.svg)](https://godotengine.org)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE.md)
 ![Status](https://img.shields.io/badge/Status-%20Prototype-green.svg)
+
 This is a 3D projectile and rocket trajectory simulator developed in the **Godot Engine**. It was created as a final project for a university course on *Nonlinear Optimization and Differential Equations in Computer Science* and was awarded the highest possible grade.
 
 The project's primary goal is the accurate physical modeling of flight paths by solving a custom system of differential equations, bypassing Godot's built-in physics engine to achieve a higher degree of control and realism for atmospheric flight.
