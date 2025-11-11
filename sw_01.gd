@@ -35,7 +35,8 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	
+	var arr1 := nd.array([1, 2, 3, 4, 5])
+	print(arr1)
 	graph_f.clear_points()
 	graph_df.clear_points()
 	calc_points(min_x,max_x)
