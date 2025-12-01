@@ -7,7 +7,7 @@ func _draw() -> void:
 	#x-axis:
 	draw_line(Vector2(-grid_max_grid_xy,0), Vector2(grid_max_grid_xy,0),Color.BLACK, 2.0*camera_2d.zoom.x **-1)
 	#y-axis:
-	draw_line(Vector2(0,-grid_max_grid_xy), Vector2(0,grid_max_grid_xy),Color.BLACK,2.0*camera_2d.zoom.x **-1)	
-	
+	draw_line(Vector2(0,-grid_max_grid_xy), Vector2(0,grid_max_grid_xy),Color.BLACK,2.0*camera_2d.zoom.x **-1)
+
 func _process(delta: float) -> void:
 	queue_redraw()

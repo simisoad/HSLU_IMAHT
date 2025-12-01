@@ -50,13 +50,3 @@ func _ready() -> void:
 #
 	#Parameters.ivp_step_size = self.ivp_step_size
 	#numerical_methods.numerical_method = self.numerical_method
-
-
-
-	
-	
-	
-	
-	
-	
-	

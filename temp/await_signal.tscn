@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://n4item8bqpa"]
 
-[ext_resource type="Script" path="res://temp/await_signal.gd" id="1_wivyf"]
+[ext_resource type="Script" uid="uid://b4gqyx7u120qu" path="res://temp/await_signal.gd" id="1_wivyf"]
 
 [node name="awaitsignal" type="Node"]
 script = ExtResource("1_wivyf")

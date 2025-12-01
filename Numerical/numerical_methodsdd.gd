@@ -22,28 +22,28 @@ var numerical_method_printed: bool = false
 var max_heigth_array: Array
 var reached_distance: float = 0.0
 func _ready():
-	
+
 	connect("start_calculations_signal", Callable(self, "_on_start_calculations"))
 
-	
+
 func _on_start_calculations_signal() -> void:
 	_start_calculations()
-	
+
 func _on_numerical_method_selected(method: int) -> void:
 	#enum NumericalMethod { RK4, Euler, SymplecticVerlet, VelocityVerlet }
 	#print("method: ", method)
-	if method == 0: 
+	if method == 0:
 		numerical_method = NumericalMethod.RK4
-	if method == 1: 
+	if method == 1:
 		numerical_method = NumericalMethod.Euler
-	if method == 2: 
+	if method == 2:
 		numerical_method = NumericalMethod.SymplecticVerlet
-	if method == 3: 
+	if method == 3:
 		numerical_method = NumericalMethod.VelocityVerlet
 	if method == 4:
-		numerical_method = NumericalMethod.RK4b				
-	pass	
-		
+		numerical_method = NumericalMethod.RK4b
+	pass
+
 func _start_calculations() -> Dictionary:
 	speed_data.clear()
 	#print("_start_calculations wurde aufgerufen")
@@ -51,7 +51,7 @@ func _start_calculations() -> Dictionary:
 	var initial_conditions: Array = _ic(Parameters.projectile_muzzle_velocity,
 	Parameters.projectile_phi_xy,
 	Parameters.projectile_theta_inclination)
-	
+
 	##print("Parameters.ivp_step_size : " + str(Parameters.ivp_step_size))
 	var trajectory: Array = _ivp1_modified(Parameters.ivp_step_size,initial_conditions)
 	##print("trajectory: ",trajectory)
@@ -63,7 +63,7 @@ func _start_calculations() -> Dictionary:
 	_print_distance_infos(trajectory, times)
 	emit_signal("send_data_signal", results)
 	_print_lowest_air_density()
-	
+
 	self.emit_signal("calculation_ended")
 	await get_tree().create_timer(0.1).timeout
 	#d_max()
@@ -73,34 +73,34 @@ func d_max() -> void:
 	for i in self.speed_data.size()-1:
 		average_speed += self.speed_data[i]
 	average_speed /= speed_data.size()
-	
+
 	var average_g: float = 0.0
 	for i in gravity_array.size()-1:
 		average_g += self.gravity_array[i]
 	average_g /= gravity_array.size()
 	average_speed = 10.0
-	
+
 	print_rich("[color=green][b]max_distance_calculated: ",(average_speed**2*sin(Parameters.projectile_theta_inclination))/average_g, " average speed: ", average_speed, " average_g: ", average_g)
 func _print_distance_infos(trajectory: Array, times: Array) -> void:
 	var trajectory_size = trajectory.size()-1
 	var start_pos: Vector3 = Vector3(trajectory[0][0],trajectory[0][1],trajectory[0][2])
 	var end_pos: Vector3 = Vector3(trajectory[trajectory_size][0],trajectory[trajectory_size][1],trajectory[trajectory_size][2])
-	
+
 	##print(start_pos)
 	##print(end_pos)
 	reached_distance = start_pos.distance_to(end_pos)
 	emit_signal("end_pos_signal", end_pos)
-	
-	
+
+
 	for i in trajectory_size:
 		max_heigth_array.append(trajectory[i][2])
 	max_heigth_array.sort()
 	var full_time: float = 0.0
 	for i in times.size()-1:
 		full_time += times[i]
-	
+
 	print_rich("[color=green][b]Distance: " + str(reached_distance), ", used time: ", full_time,", max height: " + str(max_heigth_array[max_heigth_array.size()-1]))
-	
+
 func get_range() -> float:
 	return reached_distance
 func restart_calculations(theta: float, v0: float = Parameters.projectile_muzzle_velocity) -> void:
@@ -112,11 +112,11 @@ func restart_calculations(theta: float, v0: float = Parameters.projectile_muzzle
 func _print_lowest_air_density() -> void:
 	air_density_data.sort()
 	##print("lowest air pressure: "+str(air_density_data[0]))
-	
 
 
-	
-# Physikalische Funktion (inkl. Schubkraft)	
+
+
+# Physikalische Funktion (inkl. Schubkraft)
 func _ode(t: float, state: Array, add_thrust: bool = false) -> Array:
 	var x = state[0]
 	var y = state[1]
@@ -124,7 +124,7 @@ func _ode(t: float, state: Array, add_thrust: bool = false) -> Array:
 	var dx = state[3]
 	var dy = state[4]
 	var dz = state[5]
-	
+
 	var u = Vector3(dx, dy, dz).length()
 	# Methode get_air_density(z) aus Physics_Node!
 	var rho = physics._get_air_density(z) # + height above sea level möglich, aber geht das hier?
@@ -133,7 +133,7 @@ func _ode(t: float, state: Array, add_thrust: bool = false) -> Array:
 	# Berechnung des dynamischen Drag-Koeffizienten
 	var cd = physics.calculate_cd(u,z)#Parameters.projectile_drag_coefficient
 	var A = Parameters.projectile_area
-	
+
 		# Basisentlastungseffekt
 	var a = physics.calculate_speed_of_sound(z)
 	var M = u / a
@@ -143,18 +143,18 @@ func _ode(t: float, state: Array, add_thrust: bool = false) -> Array:
 	# Luftwiderstand
 	var drag_force = 0.5 * rho * u**2 * cd * A #physics._calculate_drag_force(u,rho,Parameters.projectile_diameter, epsilon) #
 	drag_force -= base_area * P_b  # Basisentlastung berücksichtigen
-	
+
 	# Gravitationskraft g:
 	var g = physics.calculate_g(z)
-	
+
 	var actual_pos: Vector3 = Vector3(x,y,z)
 	var g_direction: Vector3 = actual_pos.direction_to(earth_middle)
 	var g_vector: Vector3 = g_direction * g
-	
+
 	#var g_direction = Vector3(0,0,1)
 	#print("g_direction * g: ", g*g_direction)
 	#print(g_vector.length())
-	# Schubkraft berechnen 
+	# Schubkraft berechnen
 	var thrust: Vector3 = Vector3.ZERO
 	thrust = physics._calculate_thrust(t, state,Parameters.projectile_mass) #calculate_thrust
 	###print("thrust" + str(thrust) + "t: " + str(t))
@@ -166,9 +166,9 @@ func _ode(t: float, state: Array, add_thrust: bool = false) -> Array:
 		else:
 			thrust_array.append(true)
 		#thrust = Vector3.ZERO
-	
-	
-	
+
+
+
 	# Beschleunigungen berechnen
 	return [
 		dx,
@@ -228,7 +228,7 @@ func _ode_advanced(t: float, state: Array, add_thrust: bool = false) -> Array:
 		(thrust.y - drag_force * (dy / u)),  # y-Komponente
 		(thrust.z - drag_force * (dz / u) - g)  # z-Komponente
 	]
-	
+
 # Anfangsbedingungen für Geschwindigkeit und Winkel
 func _ic(v0: float, phi: float, theta: float) -> Array:
 	var phi_rad = deg_to_rad(phi) # Winkel in der XY-Ebene
@@ -253,7 +253,7 @@ func _rk4(x0: float, y0: Array, h: float, get_speed_data: bool = false) -> Array
 	return [x2, result_state]
 # Runge-Kutta-Verfahren 4. Ordnung
 func _rk4b(x0: float, y0: Array, h: float, get_speed_data: bool = false) -> Array:
-	
+
 	var x1: float = x0 + h / 2.0
 	var x2: float = x0 + h
 	var hk1 = _array_multiply([h], _ode(x0,y0,true))
@@ -262,12 +262,12 @@ func _rk4b(x0: float, y0: Array, h: float, get_speed_data: bool = false) -> Arra
 	var hk4 = _array_multiply([h], _ode(x2, _array_add(y0, hk3)))
 	# Geschwindigkeiten berechnen: (gehört eigentlich nicht zum Runge-Kutte Verfahren!)
 	#if get_speed_data:
-		
+
 		#speed_data.append(Vector3(y0.get(3).to_float(),y0.get(4).to_float(),y0.get(5).to_float()).length())
-		
+
 	var state:Array = _array_add(y0, _array_divide( _array_add(hk1, _array_add(_array_multiply([2.0], _array_add(hk2, hk3)), hk4)), [6.0]))
 	##print("state: " + str(state))
-	
+
 	return [x2,state]
 # Hilfsfunktionen
 func _array_add(a: Array, b: Array) -> Array:
@@ -287,7 +287,7 @@ func _array_multiply(a: Array, scale: Array) -> Array:
 	for i in range(a.size()):
 		result.append(a[i] * scale[i])
 	return result
-	
+
 func _array_divide(a: Array, scale: Array) -> Array:
 	if scale.size() == 1:
 		for i in range(a.size()-1):
@@ -299,7 +299,7 @@ func _array_divide(a: Array, scale: Array) -> Array:
 	for i in range(a.size()):
 		result.append(a[i] / scale[i])
 	return result
-	
+
 #Euler-Verfahren:
 func _euler(t: float, state: Array, h: float) -> Array:
 	# Berechnung der nächsten Position und Geschwindigkeit mit dem Euler-Verfahren
@@ -324,14 +324,14 @@ func _velocity_verlet(x0: float, y0: Array, h: float, get_speed_data: bool = fal
 	# Extrahiere Position und Geschwindigkeit aus dem aktuellen Zustand
 	var position: Vector3 = Vector3(y0[0], y0[1], y0[2])
 	var velocity: Vector3 = Vector3(y0[3], y0[4], y0[5])
-	
+
 	# Berechne die anfängliche Beschleunigung
 	var acceleration_array: Array = _extract_velocity(_ode(x0, y0,true))
 	var acceleration: Vector3 = Vector3(acceleration_array[0],acceleration_array[1],acceleration_array[2])
-	
+
 	# Update Position
 	var new_position: Vector3 = position + velocity * h + 0.5 * acceleration * h * h
-	
+
 	# Berechne die neue Beschleunigung (basierend auf der neuen Position)
 	var new_state_temp: Array = [
 		new_position.x, new_position.y, new_position.z,
@@ -339,24 +339,24 @@ func _velocity_verlet(x0: float, y0: Array, h: float, get_speed_data: bool = fal
 	]
 	acceleration_array = _extract_velocity(_ode(x0 + h, new_state_temp))
 	var new_acceleration: Vector3 = Vector3(acceleration_array[0],acceleration_array[1],acceleration_array[2])
-	
+
 	# Update Geschwindigkeit
 	var new_velocity: Vector3 = velocity + 0.5 * (acceleration + new_acceleration) * h
-	
+
 	# Erstelle den neuen Zustand
 	var new_state: Array = [
 		new_position.x, new_position.y, new_position.z,
 		new_velocity.x, new_velocity.y, new_velocity.z
 	]
-	
+
 	# Optionale Speicherung der Geschwindigkeit
 	if get_speed_data:
 		speed_data.append(new_velocity.length())
-	
+
 	# Nächste Zeit und neuer Zustand zurückgeben
 	var x1: float = x0 + h
 	return [x1, new_state]
-	
+
 func _symplectic_verlet(t: float, state: Array, h: float) -> Array:
 	# Berechne die Beschleunigungen basierend auf dem aktuellen Zustand
 	var accelerations: Array= _extract_velocity(_ode(t, state,true))
@@ -366,9 +366,9 @@ func _symplectic_verlet(t: float, state: Array, h: float) -> Array:
 
 	# Berechne die neue Position unter Verwendung der symplektischen Methode
 	var new_position = _array_add(_extract_position(state), _array_multiply([h], new_velocity))
-	
+
 	# Kombiniere die Position und Geschwindigkeit in einem neuen Zustand
-	
+
 	var new_state = new_position
 	new_state.append_array(new_velocity)
 	# Berechne den nächsten Zeitpunkt
@@ -394,11 +394,11 @@ func _ivp1_modified(step_size: float, initial_conditions: Array) -> Array:
 	while true:
 		var result: Array
 		##print("curren_state: " + str(current_state))
-		
+
 		# Auswahl des Verfahrens
-		
+
 		match numerical_method:
-			
+
 			NumericalMethod.RK4:
 				method = "rk4"
 				result = _rk4(current_time, current_state, step_size, true)  # RK4 verwenden
@@ -420,15 +420,15 @@ func _ivp1_modified(step_size: float, initial_conditions: Array) -> Array:
 			NumericalMethod.VelocityVerlet:
 				method = "velocity_verlet"
 				result = _velocity_verlet(current_time, current_state, step_size, true)  # Verletztes Verfahren verwenden
-				
+
 		if not numerical_method_printed:
-			
+
 			#print(method)
 			numerical_method_printed = true
-			
+
 		var next_time: float = result[0]
 		var next_state: Array = result[1]
-		
+
 		states.append(next_state)
 
 		# Abbruchbedingung prüfen
@@ -446,22 +446,22 @@ func _set_speed_data(current_state: Array) -> void:
 	speed_data.append(Vector3(current_state[3],current_state[4],current_state[5]).length())
 
 func _stop_ivp(z0: Array, z1: Array) -> bool:
-	
+
 	return z0[2] > 0.0 and z1[2] <= 0.0 and abs(z1[2]) < 1e6
-	
+
 func _interpolate(t0: float, z0: Array, t1: float, z1: Array) -> Array:
 	#print("z0: ", z0, ", z1: ", z1)
 	var g:float = z0[2]  # z-Komponente von z0
 	var f:float = z1[2]  # z-Komponente von z1
 	var h:float = f - g  # Differenz in z
-	
+
 	# Normierung
 	f /= h
 	g /= h
-	
+
 	# Interpolierter Zeitpunkt
 	var interpolated_time:float = f * t0 - g * t1
-	
+
 	# Interpolierte Position
 	var interpolated_position = _array_add(_array_multiply([f],z0), _array_multiply([-g] , z1))
 	#print("interpolated_position: ", interpolated_position)
@@ -469,7 +469,7 @@ func _interpolate(t0: float, z0: Array, t1: float, z1: Array) -> Array:
 	#print("interpolated state: ", result)
 	return result
 
-	
+
 func _calculate_times(trajectory: Array) -> Array:
 	# Berechnet die Zeiten für jeden Abschnitt
 	var times: Array = []
@@ -483,9 +483,9 @@ func _calculate_times(trajectory: Array) -> Array:
 		var p2_x: float = trajectory[i+1][0]
 		var p2_y: float = trajectory[i+1][1]
 		var p2_z: float = trajectory[i+1][2]
-		
+
 		##print("i: ", i , ", i+1: ", i+1,", p1_x: ",p1_x, ", p2_x:",p2_x, " ,trajectory[i]:", trajectory[i]," ,trajectory[i+1]:", trajectory[i+1])
-		
+
 		var p1: Vector3 = Vector3(p1_x, p1_y, p1_z)
 		var p2: Vector3 = Vector3(p2_x, p2_y, p2_z)
 		var part_length = p1.distance_to(p2)

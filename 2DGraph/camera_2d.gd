@@ -16,14 +16,14 @@ func _ready() -> void:
 	pass
 
 func _process(delta: float) -> void:
-	if has_windows_focus: 
+	if has_windows_focus:
 		_zoom(delta)
 		_camera_movement(delta)
 		camera_speed = self.zoom.x **-1 * camera_speed_start
 
 
 
-	
+
 func _zoom(delta: float) -> void:
 	if Input.is_action_just_pressed("2D_camera_zoom_in"):
 		zoomTarget = zoomTarget * zoom_multiplier
@@ -31,7 +31,7 @@ func _zoom(delta: float) -> void:
 		zoomTarget = zoomTarget * (1-zoom_multiplier+1)
 	zoomTarget = zoomTarget.clamp(zoom_min, zoom_max)
 	self.zoom = self.zoom.slerp(zoomTarget, zoom_smoothness*delta)
-	
+
 	pass
 
 func _camera_movement(delta: float) -> void:
@@ -39,7 +39,7 @@ func _camera_movement(delta: float) -> void:
 		camera_temp_speed_multiplier = 5.0
 	else:
 		camera_temp_speed_multiplier = 1.0
-	
+
 	if Input.is_action_pressed("2D_camera_move_down"):
 		self.global_position.y += camera_speed*camera_temp_speed_multiplier * delta
 	if Input.is_action_pressed("2D_camera_move_left"):

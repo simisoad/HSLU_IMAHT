@@ -11,11 +11,11 @@ func _ready() -> void:
 func _on_point_size_slider_value_changed(value: float) -> void:
 	Parameters.point_size = value
 	emit_signal("point_size_changed_signal", value)
-	
 
-	
+
+
 func _set_new_float_value(new_text: String, line_edit: LineEdit, parameter_value: float) -> float:
-	
+
 	if new_text.is_valid_float():
 		var new_value: float = new_text.to_float()
 		parameter_value = new_value

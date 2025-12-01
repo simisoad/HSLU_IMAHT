@@ -7,4 +7,3 @@ func _on_planet_radius_changed() -> void:
 	self.mesh.radius = radius
 	self.mesh.height = radius*2
 	world_collision_shape_3d.shape.radius = radius
-	

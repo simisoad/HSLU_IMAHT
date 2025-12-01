@@ -22,7 +22,7 @@ func _init(position: Vector3, velocity: float, acceleration: Vector3):
 func get_position() -> Vector3:
 	return self._position
 func get_velocity() -> float:
-	return self._velocity	
+	return self._velocity
 func get_drag() -> float:
 	return self._drag
 func get_acceleration() -> Vector3:
@@ -30,14 +30,14 @@ func get_acceleration() -> Vector3:
 func get_actual_air_density() -> float:
 	return self._actual_air_density
 func get_rotation() -> float:
-	return self._rotation	
+	return self._rotation
 func get_look_at_vector() -> Vector3:
-	return self._look_at_vector		
+	return self._look_at_vector
 func get_has_thrust() -> bool:
 	return self._has_thrust
 func get_thrust_active() -> bool:
-	return self._thrust_active		
-		
+	return self._thrust_active
+
 func set_position(pos:Vector3) -> void:
 	self._position = pos
 func set_velocity(vel:float) -> void:

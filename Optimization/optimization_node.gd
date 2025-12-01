@@ -5,7 +5,7 @@ signal run_simulation_for_optimization
 signal await_signal
 signal angle_optimized_signal(angle: float)
 
-# Parameter für die Optimierung 
+# Parameter für die Optimierung
 var theta_start: float = deg_to_rad(Parameters.projectile_theta_inclination)  # Startwinkel in Bogenmaß
 var learning_rate: float = 0.1  # Schrittweite des Gradientenverfahrens
 var tolerance: float = 0.01  # Abbruchkriterium
@@ -28,10 +28,10 @@ func _ready() -> void:
 # Funktion zum Warten auf das Signal
 func wait_for_signal() -> void:
 	await await_signal  # Warten auf das Signal, dass die Berechnung abgeschlossen ist
-	
+
 func _on_calculation_ended() -> void:
 	emit_signal("await_signal")
-	
+
 
 # Hauptmethode zum Starten der Optimierung
 func _on_run_optimization(opt_method: String = "gradient") -> void:
@@ -64,7 +64,7 @@ func range_function(theta: float, nelder_mead: bool = false) -> float:
 	if nelder_mead:
 		result = result * -1
 	return result
-	
+
 func range_function_2d(theta: float, v0: float, nelder_mead: bool = false) -> float:
 	##print("Opti: Berechnung startet für Winkel ", rad_to_deg(theta), " und Geschwindigkeit ", v0)
 	numerical_methods.restart_calculations(rad_to_deg(abs(theta)), abs(v0))
@@ -74,23 +74,23 @@ func range_function_2d(theta: float, v0: float, nelder_mead: bool = false) -> fl
 	if nelder_mead:
 		result *= -1
 	return result  # Negativ für Minimierung
-	
+
 # ------------------ Gradientenverfahren Problem 01------------------
 func optimize_for_max_range_gradient() -> float:
 	var theta = deg_to_rad(Parameters.projectile_theta_inclination)  # Startwinkel
 	var iteration = 0
 	print("Opti: Gradientenverfahren gestartet. Startwinkel: ", rad_to_deg(theta))
-	
+
 	while iteration < max_iterations:
 		# Gradienten berechnen
 		var gradient = await calculate_gradient(theta)
 		#print("Opti: Iteration:", iteration, ", Gradient:", gradient, ", Theta:", rad_to_deg(theta))
-		
+
 		# Schritt in Richtung Maximum, versuch Dynamisch:
 		var step = learning_rate * gradient / (1 + abs(gradient))
 		#var step = learning_rate * gradient
 		theta += step
-		
+
 		# Winkel auf physikalisch mögliche Grenzen beschränken
 		theta = clamp(theta, minimum_angle, maximum_angle)
 		calculated_distances.append(await range_function(theta))
@@ -99,9 +99,9 @@ func optimize_for_max_range_gradient() -> float:
 			print("Opti: Optimierung abgeschlossen. Optimaler Winkel: ", rad_to_deg(theta))
 			print("Max Range: ", calculated_distances.max())
 			return theta
-		
+
 		iteration += 1
-	
+
 	print("Opti: Maximale Iterationen erreicht. Letzter Winkel: ", rad_to_deg(theta))
 	return theta
 
@@ -117,45 +117,45 @@ func optimize_for_max_range_gradient_old() -> float:
 		print("Opti: new theta: ", theta)
 		if abs(gradient) < tolerance:
 			print("Opti: Gradient optimization finished. Optimized angle: ", rad_to_deg(theta))
-			
+
 			return theta
-			
+
 		iteration += 1
 	print_rich("[color=red][b]Max iterations reached. Last angle: ", rad_to_deg(theta))
 	return theta
-	
+
 
 func calculate_gradient(theta: float) -> float:
 	# Dynamische Schrittweite h
 	var h = deg_to_rad(0.1) * (1 / sqrt(1 + Parameters.projectile_muzzle_velocity))
 	h = clamp(h, deg_to_rad(0.001), deg_to_rad(1))  # Begrenzung der Schrittweite
-	
+
 	# Berechnung der Reichweiten für Theta +/- h
 	var angle_plus: float = theta + h
 	var angle_minus: float = theta - h
 	angle_minus = max(angle_minus, minimum_angle)  # Winkelbegrenzung
 	angle_plus = min(angle_plus, maximum_angle)
-	
+
 	var range_plus = await range_function(angle_plus)
 	var range_minus = await range_function(angle_minus)
-	
+
 	# Berechnung des Gradienten
 	var gradient = (range_plus - range_minus) / (2 * h)
-	
+
 	# Normierung durch die maximal erreichbare Reichweite
 	gradient /= max(range_plus, range_minus, 1.0)
-	
+
 	#print("range_plus: ", range_plus, ", range_minus: ", range_minus, ", h: ", rad_to_deg(h))
 	return gradient
 
-	
+
 func optimize_angle_and_velocity_gradient_old( ) -> Dictionary:
 	var step_size_angle: float = 0.01
 	var step_size_velocity: float = 10
-	
+
 	var toleranz_angle: float = 0.001
 	var toleranz_velocity: float = 0.5
-	
+
 	var alpha_angle: float = 0.01
 	var alpha_velocity: float = 5
 	var theta = theta_start
@@ -183,7 +183,7 @@ func optimize_angle_and_velocity_gradient_old( ) -> Dictionary:
 		# Abbruchbedingung
 		if abs(gradient_theta) < toleranz_angle and abs(gradient_velocity) < toleranz_velocity:
 			break
-	
+
 	#print("Opti: Optimaler Winkel: ", rad_to_deg(theta), ", optimale Mündungsgeschw.: ", velocity, " Max. Dist: ", range_function_2d(theta, velocity))
 	return {
 		"theta": theta,
@@ -197,7 +197,7 @@ func optimize_angle_and_velocity_gradient_nur_anfangsWinkel() -> Dictionary:
 	#print("Opti: Starte Winkel-Optimierung...")
 	var optimized_theta = await optimize_for_max_range_gradient()
 
-	
+
 	# 2. Geschwindigkeit optimieren (Winkel fixieren)
 	#print("Opti: Starte Geschwindigkeits-Optimierung...")
 	var step_size_velocity: float = 10
@@ -356,7 +356,7 @@ func optimize_for_max_range_nelder_mead() -> void:
 
 func _simplex_compare(a, b) -> int:
 	return -1 if await range_function(a[0],true) < await range_function(b[0],true) else 1
-	
+
 func optimize_for_max_range_2d() -> void:
 	var simplex = []
 	var theta_start = deg_to_rad(60)  # Vernünftiger Startwinkel

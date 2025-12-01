@@ -31,4 +31,3 @@ func _get_3D_positino_from_mouse() -> Vector3:
 		return result_position
 	else:
 		return Vector3.INF
-	

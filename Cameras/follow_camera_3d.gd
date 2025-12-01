@@ -20,20 +20,20 @@ func _ready() -> void:
 		camera_rotation_node_exists = false
 	else:
 		camera_rotation_node_exists = true
-	 
+
 func _process(delta: float) -> void:
 	if camera_active:
 		_camera_movement(delta)
 func _camera_movement(delta: float) -> void:
 	if Input.is_action_just_released("2D_camera_zoom_in"):
 		camera_zoom += -camera_zoom_steps
-		
+
 	if Input.is_action_just_released("2D_camera_zoom_out"):
 		camera_zoom += camera_zoom_steps
-		
+
 	camera_zoom = clamp(camera_zoom,camera_min_zoom,camera_max_zoom)
 	self.position.x = camera_zoom
-			
+
 func _input(event: InputEvent) -> void:
 	if camera_rotation_node_exists:
 		if Input.is_action_pressed("camera_rotate") and not Input.is_action_pressed("camera_move"):
@@ -44,6 +44,6 @@ func _input(event: InputEvent) -> void:
 					camera_rotation_x.rotate_object_local(camera_rotation_x.transform.basis.z, -event.relative.y * mouse_sensitivity)
 func _on_focus_entered() ->void:
 	camera_active = true
-	
+
 func _on_focus_exited() -> void:
 	camera_active = false

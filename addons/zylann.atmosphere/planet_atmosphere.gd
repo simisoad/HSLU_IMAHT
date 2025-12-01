@@ -93,13 +93,13 @@ func _init():
 	_near_mesh.orientation = PlaneMesh.FACE_Z
 	_near_mesh.size = Vector2(2.0, 2.0)
 	_near_mesh.flip_faces = true
-	
+
 	#_far_mesh = _create_far_mesh()
 	_far_mesh = BoxMesh.new()
 	_far_mesh.size = Vector3(1.0, 1.0, 1.0)
 
 	_mesh_instance.mesh = _far_mesh
-	
+
 	_update_cull_margin()
 
 	# Setup defaults for the builtin shader
@@ -117,7 +117,7 @@ func _ready():
 
 func set_custom_shader(shader: Shader):
 	_custom_shader = shader
-	
+
 	var mat := _get_material()
 	if _custom_shader == null:
 		mat.shader = DefaultShader
@@ -128,13 +128,13 @@ func set_custom_shader(shader: Shader):
 			# Fork built-in shader
 			if shader.code == "" and previous_shader == DefaultShader:
 				shader.code = DefaultShader.code
-	
+
 	var uniforms := _custom_shader.get_shader_uniform_list()
 	for uniform in uniforms:
 		if uniform.name == "u_optical_depth_texture":
 			_uses_baked_optical_depth = true
 			break
-	
+
 	if _uses_baked_optical_depth:
 		_request_bake_optical_depth()
 
@@ -285,13 +285,13 @@ func _set_mode(mode: int):
 func _process(_delta):
 	var cam_pos := Vector3()
 	var cam_near := 0.1
-	
+
 	var cam := get_viewport().get_camera_3d()
 
 	if cam != null:
 		cam_pos = cam.global_transform.origin
 		cam_near = cam.near
-		
+
 	elif Engine.is_editor_hint():
 		# Getting the camera in editor is freaking awkward so let's hardcode it...
 		cam_pos = global_transform.origin \
@@ -301,7 +301,7 @@ func _process(_delta):
 	# the largest distance from the center into account
 	var atmo_clip_distance : float = \
 		1.75 * (_planet_radius + _atmosphere_height + cam_near) * SWITCH_MARGIN_RATIO
-	
+
 	# Detect when to switch modes.
 	# we always switch modes while already being slightly away from the quad, to avoid flickering
 	var d := global_transform.origin.distance_to(cam_pos)
@@ -319,9 +319,9 @@ func _process(_delta):
 			cm.size = Vector3(atmo_clip_distance, atmo_clip_distance, atmo_clip_distance)
 			_mesh_instance.mesh = cm
 			_far_mesh = cm
-	
+
 	var mat := _get_material()
-	
+
 	# Lazily avoiding the node referencing can of worms.
 	# Not very efficient but I assume there won't be many atmospheres in the game.
 	# In Godot 4 it could be replaced by caching the object ID in some way
@@ -329,12 +329,12 @@ func _process(_delta):
 		var sun = get_node(_sun_path)
 		if sun is Node3D:
 			mat.set_shader_parameter(&"u_sun_position", sun.global_transform.origin)
-	
+
 	# We need this for mapping stuff around the planet.
 	# TODO Ideally we need view_to_model, which is better to avoid conversions with large numbers.
 	var world_to_model_matrix := global_transform.inverse()
 	mat.set_shader_parameter(&"u_world_to_model_matrix", world_to_model_matrix)
-	
+
 	# TODO Expose cloud coverage rotation speed
 	var time := float(Time.get_ticks_msec()) / 1000.0
 	mat.set_shader_parameter(&"u_cloud_coverage_rotation", Transform2D().rotated(

@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://dq80qek1b5x"]
+[gd_scene load_steps=7 format=3 uid="uid://dq80qek1b5x"]
 
-[ext_resource type="Script" path="res://GUI/simulation_gui.gd" id="1_cryyx"]
+[ext_resource type="Script" uid="uid://qnfw4wsuvii8" path="res://GUI/simulation_gui.gd" id="1_cryyx"]
 [ext_resource type="PackedScene" uid="uid://jt8hlf36qkb2" path="res://GUI/simulation_options_gui.tscn" id="2_6a2or"]
 [ext_resource type="PackedScene" uid="uid://pdev0f1t0knq" path="res://GUI/visual_options_gui.tscn" id="3_f1w6i"]
 [ext_resource type="SystemFont" uid="uid://biq881bp0kcgc" path="res://GUI/new_system_font.tres" id="4_8rrxe"]
+[ext_resource type="PackedScene" uid="uid://ctvjy7g85gqg" path="res://GUI/Help.tscn" id="4_vj1px"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_vaabf"]
 font = ExtResource("4_8rrxe")
@@ -32,33 +33,48 @@ grow_vertical = 1
 [node name="VisualOptionsGui" parent="." instance=ExtResource("3_f1w6i")]
 layout_mode = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="VBoxContainer" type="BoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_top = -40.0
-offset_right = 40.0
+offset_right = 443.0
 grow_vertical = 0
 
-[node name="OptionsButton" type="Button" parent="HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HelpLabel" parent="VBoxContainer/VBoxContainer" instance=ExtResource("4_vj1px")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Help" type="Button" parent="VBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Help"
+
+[node name="OptionsButton" type="Button" parent="VBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 toggle_mode = true
 keep_pressed_outside = true
 text = "Options"
 
-[node name="ClearAllTrajectoriesButton" type="Button" parent="HBoxContainer"]
+[node name="ClearAllTrajectoriesButton" type="Button" parent="VBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 toggle_mode = true
 keep_pressed_outside = true
 text = "Clear all Trajectories"
 
-[node name="CameraSpeedMultiplier" type="Label" parent="HBoxContainer"]
+[node name="CameraSpeedMultiplier" type="Label" parent="VBoxContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "CameraSpeedMultiplier: "
 
-[node name="camera_pos" type="Label" parent="HBoxContainer"]
+[node name="camera_pos" type="Label" parent="VBoxContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
@@ -82,6 +98,7 @@ label_settings = SubResource("LabelSettings_vaabf")
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[connection signal="pressed" from="HBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]
-[connection signal="toggled" from="HBoxContainer/OptionsButton" to="." method="_on_options_button_toggled"]
-[connection signal="toggled" from="HBoxContainer/ClearAllTrajectoriesButton" to="." method="_on_clear_all_trajectories_button_toggled"]
+[connection signal="pressed" from="VBoxContainer/VBoxContainer/HBoxContainer/Help" to="." method="_on_help_pressed"]
+[connection signal="pressed" from="VBoxContainer/VBoxContainer/HBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="toggled" from="VBoxContainer/VBoxContainer/HBoxContainer/OptionsButton" to="." method="_on_options_button_toggled"]
+[connection signal="toggled" from="VBoxContainer/VBoxContainer/HBoxContainer/ClearAllTrajectoriesButton" to="." method="_on_clear_all_trajectories_button_toggled"]

@@ -1,21 +1,21 @@
 [gd_scene load_steps=32 format=3 uid="uid://comp4v2qgqy0j"]
 
-[ext_resource type="Script" path="res://Main/main_node.gd" id="1_5kt2v"]
+[ext_resource type="Script" uid="uid://gjpba8j1u4eb" path="res://Main/main_node.gd" id="1_5kt2v"]
 [ext_resource type="PackedScene" uid="uid://bu67q2e6ynxhi" path="res://Simulation/simulation_node.tscn" id="2_rkdto"]
 [ext_resource type="PackedScene" uid="uid://di730if76oydv" path="res://Trajectory/trajectory.tscn" id="3_eutvg"]
 [ext_resource type="PackedScene" uid="uid://cfh5oxl5n6non" path="res://Visualization/visualization_node.tscn" id="3_ski1j"]
 [ext_resource type="PackedScene" uid="uid://ld32yp8hqyvx" path="res://Numerical/numerical_methods.tscn" id="4_hry7y"]
 [ext_resource type="PackedScene" uid="uid://bvyh5youubk45" path="res://Cameras/FreeCamera.tscn" id="5_tvy12"]
 [ext_resource type="Texture2D" uid="uid://dq5vctrinr8pc" path="res://World/EarthModel_world.topo.bathy.200411.png" id="6_3bifg"]
-[ext_resource type="Script" path="res://World/planet.gd" id="6_544pv"]
-[ext_resource type="Shader" path="res://World/Atmosphere/atmosphere.gdshader" id="8_e17lc"]
+[ext_resource type="Script" uid="uid://cacc0hlpejxri" path="res://World/planet.gd" id="6_544pv"]
+[ext_resource type="Shader" uid="uid://cr2grxxnbjymf" path="res://World/Atmosphere/atmosphere.gdshader" id="8_e17lc"]
 [ext_resource type="PackedScene" uid="uid://cfn7cgpw7wgs3" path="res://Optimization/optimization_node.tscn" id="8_r0ydw"]
-[ext_resource type="Script" path="res://Main/projectile_start_pos.gd" id="9_axr8d"]
+[ext_resource type="Script" uid="uid://spkl7ignjdk5" path="res://Main/projectile_start_pos.gd" id="9_axr8d"]
 [ext_resource type="PackedScene" uid="uid://dq80qek1b5x" path="res://GUI/simulation_gui.tscn" id="9_o5sj1"]
 [ext_resource type="PackedScene" uid="uid://fnpqj8fc7i5w" path="res://2DGraph/2d_graph.tscn" id="12_sty58"]
-[ext_resource type="Script" path="res://Main/titel.gd" id="14_fhxi8"]
-[ext_resource type="Script" path="res://Main/control.gd" id="14_wic16"]
-[ext_resource type="Script" path="res://Main/fragen.gd" id="15_doyrc"]
+[ext_resource type="Script" uid="uid://bldfyuj8bprio" path="res://Main/titel.gd" id="14_fhxi8"]
+[ext_resource type="Script" uid="uid://barlj3jjw2gh7" path="res://Main/control.gd" id="14_wic16"]
+[ext_resource type="Script" uid="uid://cpsxadj55cs34" path="res://Main/fragen.gd" id="15_doyrc"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_hnyd0"]
 radius = 1000.0
@@ -40,7 +40,7 @@ shader = ExtResource("8_e17lc")
 shader_parameter/albedo = Color(0, 0.494118, 0.811765, 0.686275)
 shader_parameter/point_size = 1.0
 shader_parameter/roughness = 1.0
-shader_parameter/metallic_texture_channel = null
+shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
 shader_parameter/specular = 0.5
 shader_parameter/metallic = 0.0
 shader_parameter/uv1_scale = Vector3(1, 1, 1)
@@ -54,7 +54,7 @@ shader = ExtResource("8_e17lc")
 shader_parameter/albedo = Color(0, 0.49376, 0.811556, 0.454902)
 shader_parameter/point_size = 1.0
 shader_parameter/roughness = 1.0
-shader_parameter/metallic_texture_channel = null
+shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
 shader_parameter/specular = 0.5
 shader_parameter/metallic = 0.0
 shader_parameter/uv1_scale = Vector3(1, 1, 1)
@@ -68,7 +68,7 @@ shader = ExtResource("8_e17lc")
 shader_parameter/albedo = Color(0.0032703, 0.157397, 0.28162, 0.321569)
 shader_parameter/point_size = 1.0
 shader_parameter/roughness = 1.0
-shader_parameter/metallic_texture_channel = null
+shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
 shader_parameter/specular = 0.5
 shader_parameter/metallic = 0.0
 shader_parameter/uv1_scale = Vector3(1, 1, 1)
@@ -169,10 +169,10 @@ skeleton = NodePath("../..")
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.84923, 16.0432)
 camara_height_max = 80000.0
-camera_max_x = 3e+06
+camera_max_x = 3000000.0
 camera_min_x = -300000.0
-camera_max_z = 3e+06
-camera_min_z = -3e+06
+camera_max_z = 3000000.0
+camera_min_z = -3000000.0
 
 [node name="StartDirectionRotation" type="Node3D" parent="StartPos"]
 unique_name_in_owner = true

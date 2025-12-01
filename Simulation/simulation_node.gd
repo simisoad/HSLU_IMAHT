@@ -25,7 +25,7 @@ func _ready():
 	projectile = Projectile.new(Parameters.projectile_start_pos, 0.0, Vector3.ZERO)
 	connect("simulation_ended", Callable(self, "_on_simulation_ended"))
 	pass
-	
+
 func _on_simulation_ended() ->void:
 	times.clear()
 	thrust_array.clear()
@@ -33,11 +33,11 @@ func _on_simulation_ended() ->void:
 	segment_time = 0.0
 	current_segment = 0
 	flight_time = 0.0
-	
+
 func _start_simulation():
 	# Starte die Simulation
 	simulation_started = true
-	
+
 	print("simulation started!")
 func _on_data_received(data: Dictionary) -> void:
 	#{"trajectory": trajectory, "times": times, "speed_data": self.speed_data, "thrust_array": thrust_array}
@@ -48,13 +48,13 @@ func _on_data_received(data: Dictionary) -> void:
 	drag_data = data.get("drag_data")
 	air_density = data.get("air_density_data")
 	data_received = true
-	
-	
+
+
 func _on_start_simulation():
 	# Start-Methode wird aufgerufen, wenn das Signal ausgelöst wird
 	print("Signal: start_simulation_signal recived!" )
 	_start_simulation()
-	
+
 func _process(delta: float) -> void:
 	if simulation_started and data_received:
 		if Parameters.visualize_projectile:
@@ -63,7 +63,7 @@ func _process(delta: float) -> void:
 			emit_signal("simulation_ended")
 			simulation_started = false
 			data_received = false
-		
+
 func _simulation_projectile(delta: float, speed_data:Array):
 	if current_segment >= times.size():
 		return  # Simulation beendet
@@ -79,7 +79,7 @@ func _simulation_projectile(delta: float, speed_data:Array):
 		current_segment += 1
 		if current_segment >= trajectory.size() - 1:
 			#%Explosion.global_position = projectile.global_position
-			
+
 			print("flight_time: " + str(flight_time))
 			simulation_started = false
 			data_received = false
@@ -92,7 +92,7 @@ func _simulation_projectile(delta: float, speed_data:Array):
 
 	# Interpolation im aktuellen Abschnitt
 	var t = segment_time / (times[current_segment])
-	
+
 	var p1 = trajectory[current_segment]
 	var p2 = trajectory[current_segment + 1]
 	var projectile_position = Vector3(
@@ -112,9 +112,9 @@ func _simulation_projectile(delta: float, speed_data:Array):
 			projectile.set_thrust_active(true)
 		else:
 			projectile.set_thrust_active(false)
-	
+
 	emit_signal("simulation_updated_signal", projectile)
-	
+
 func _on_has_thrust_toggled(has_thrust: bool) -> void:
 	print("_on_has_thrust_toggled: has_thrust: ", has_thrust)
 	projectile.set_has_thrust(has_thrust)

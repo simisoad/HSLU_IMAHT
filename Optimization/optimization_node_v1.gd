@@ -82,7 +82,7 @@ func calculate_gradient(theta: float) -> float:
 
 	# Berechne f(theta + h) und f(theta - h)
 	var range_plus = range_function(theta + h)
-	
+
 	var range_minus = range_function(theta - h)
 
 	# Gradienten berechnen

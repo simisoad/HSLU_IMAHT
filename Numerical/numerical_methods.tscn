@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://ld32yp8hqyvx"]
 
-[ext_resource type="Script" path="res://Numerical/numerical_methods.gd" id="1_jt3gc"]
+[ext_resource type="Script" uid="uid://87g66abscgfq" path="res://Numerical/numerical_methods.gd" id="1_jt3gc"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_1vigo"]
 

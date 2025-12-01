@@ -1,6 +1,6 @@
 
-	
-# Physikalische Funktion (inkl. Schubkraft)	
+
+# Physikalische Funktion (inkl. Schubkraft)
 func _ode(t: float, state: Array, add_thrust: bool = false) -> Array:
 	var x = state[0]
 	var y = state[1]
@@ -23,8 +23,8 @@ func _ode(t: float, state: Array, add_thrust: bool = false) -> Array:
 	# Luftwiderstand
 	var drag_force = 0.5 * rho * u**2 * cd * A #physics._calculate_drag_force(u,rho,Parameters.projectile_diameter, epsilon) #
 	var g = physics.calculate_g(height)
-	
-	
+
+
 	var g_direction: Vector3 = actual_pos.direction_to(earth_middle)
 	var g_vector: Vector3 = g_direction * g
 
@@ -38,7 +38,7 @@ func _ode(t: float, state: Array, add_thrust: bool = false) -> Array:
 			thrust_array.append(false)
 		else:
 			thrust_array.append(true)
-	
+
 	return [
 		dx,
 		dy,
@@ -75,7 +75,7 @@ func _rk4(x0: float, y0: Array, h: float) -> Array:
 	var k2 = _ode(x1, _array_add(y0, _array_multiply(k1, [h / 2.0])))
 	var k3 = _ode(x1, _array_add(y0, _array_multiply(k2, [h / 2.0])))
 	var k4 = _ode(x2, _array_add(y0, _array_multiply(k3, [h])))
-	
+
 	print("h: ", h, " x1:", x1, " x2:", x2, " k1: ", k1, " k2: ", k2, " k3: ", k3, " k4: ", k4)
 	var result_state = _array_add(y0, _array_multiply(_array_add(k1, _array_add(_array_multiply(k2, [2.0]), _array_add(_array_multiply(k3, [2.0]), k4))), [h / 6.0]))
 	return [x2, result_state]
@@ -98,7 +98,7 @@ func _array_multiply(a: Array, scale: Array) -> Array:
 	for i in range(a.size()):
 		result.append(a[i] * scale[i])
 	return result
-	
+
 func _array_divide(a: Array, scale: Array) -> Array:
 	if scale.size() == 1:
 		for i in range(a.size()-1):
@@ -133,9 +133,9 @@ func _ivp1_modified(step_size: float, initial_conditions: Array) -> Array:
 		##print("curren_state: " + str(current_state))
 		max_step += 1
 		# Auswahl des Verfahrens
-		
+
 		match numerical_method:
-			
+
 			NumericalMethod.RK4:
 				method = "rk4"
 				result = _rk4(current_time, current_state, step_size)  # RK4 verwenden
@@ -164,18 +164,18 @@ func _ivp1_modified(step_size: float, initial_conditions: Array) -> Array:
 				step_size = result[2]
 				_set_speed_data(current_state)
 		if not numerical_method_printed:
-			
+
 			print(method)
 			numerical_method_printed = true
-		#await get_tree().create_timer(0.1).timeout	
+		#await get_tree().create_timer(0.1).timeout
 		var next_time: float = result[0]
 		var next_state: Array = result[1]
-		
+
 		states.append(next_state)
 		#print(_node_name, ": result: ", result)
 		# Abbruchbedingungungen prüfen
 		if _stop_ivp_collision(current_state, next_state):
-			
+
 			var result2 = await _interpolate(current_time, current_state, next_time, next_state, await _interpolate_raycast(current_state))
 			#var result2 = _interpolate_nd(current_time,current_state, next_time,next_state)
 			#print(_node_name + ": Abbruchbedingung erreicht: result2: ", result2[1])

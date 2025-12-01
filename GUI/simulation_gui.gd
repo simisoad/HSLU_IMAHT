@@ -21,3 +21,7 @@ func _on_camera_speed_multipier(speed: float) -> void:
 
 func _on_results_for_gui_signal(results: String) -> void:
 	%ResultsLabel.text = results
+
+
+func _on_help_pressed() -> void:
+	%HelpLabel.visible = !%HelpLabel.visible
