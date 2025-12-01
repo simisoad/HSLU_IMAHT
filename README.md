@@ -10,6 +10,7 @@ The project's primary goal is the accurate physical modeling of flight paths by 
 
 ![Simulation Screenshot](./Pic/Example.png)
 ![Simulation The projectile has reached orbit.](./Pic/Example2.png)
+The projectile has reached orbit
 ![Simulation The projectile has reached orbit.](./Pic/Example3.png)
 
 ---
